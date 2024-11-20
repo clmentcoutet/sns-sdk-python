@@ -5,7 +5,7 @@
   "files": [
     "dist"
   ],
-  "type": "module",
+  "type": "commonjs",
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",
   "types": "./dist/types/index.d.ts",
@@ -30,7 +30,8 @@
     "lint:fix": "yarn pretty:fix && eslint . --fix",
     "pretty": "prettier --check 'src/*.[jt]s'",
     "pretty:fix": "prettier --write 'src/*.[jt]s'",
-    "test": "jest ./tests"
+    "test": "jest ./tests",
+    "custom-test": "tsc && node test.js"
   },
   "devDependencies": {
     "@bonfida/prettier-config": "^1.0.0",

@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CustomBg = void 0;
+var CustomBg;
+(function (CustomBg) {
+    CustomBg["DegenPoet1"] = "DegenPoet#1";
+    CustomBg["Rgb0x001"] = "rgb0x00#1";
+    CustomBg["Retardio1"] = "Retardio#1";
+    CustomBg["Retardio2"] = "Retardio#2";
+    CustomBg["Retardio3"] = "Retardio#3";
+    CustomBg["NumberArt0"] = "NumberArt#0";
+    CustomBg["NumberArt1"] = "NumberArt#1";
+    CustomBg["NumberArt2"] = "NumberArt#2";
+    CustomBg["NumberArt3"] = "NumberArt#3";
+    CustomBg["NumberArt4"] = "NumberArt#4";
+    CustomBg["NumberArt5"] = "NumberArt#5";
+    CustomBg["NumberArt6"] = "NumberArt#6";
+    CustomBg["NumberArt7"] = "NumberArt#7";
+    CustomBg["NumberArt8"] = "NumberArt#8";
+    CustomBg["NumberArt9"] = "NumberArt#9";
+})(CustomBg || (exports.CustomBg = CustomBg = {}));

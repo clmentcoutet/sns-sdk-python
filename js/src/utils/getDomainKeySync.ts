@@ -13,7 +13,7 @@ const _deriveSync = (
   parent: PublicKey = ROOT_DOMAIN_ACCOUNT,
   classKey?: PublicKey,
 ) => {
-  let hashed = getHashedNameSync(name);
+  let hashed = getHashedNameSync(name)
   let pubkey = getNameAccountKeySync(hashed, classKey, parent);
   return { pubkey, hashed };
 };

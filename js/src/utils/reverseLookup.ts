@@ -1,8 +1,8 @@
-import { Connection, PublicKey } from "@solana/web3.js";
-import { NameRegistryState } from "../state";
-import { NoAccountDataError } from "../error";
-import { deserializeReverse } from "./deserializeReverse";
-import { getReverseKeyFromDomainKey } from "./getReverseKeyFromDomainKey";
+import {Connection, PublicKey} from "@solana/web3.js";
+import {NameRegistryState} from "../state";
+import {NoAccountDataError} from "../error";
+import {deserializeReverse} from "./deserializeReverse";
+import {getReverseKeyFromDomainKey} from "./getReverseKeyFromDomainKey";
 
 /**
  * This function can be used to perform a reverse look up
@@ -11,16 +11,16 @@ import { getReverseKeyFromDomainKey } from "./getReverseKeyFromDomainKey";
  * @returns The human readable domain name
  */
 export async function reverseLookup(
-  connection: Connection,
-  nameAccount: PublicKey,
-  parent?: PublicKey,
+    connection: Connection,
+    nameAccount: PublicKey,
+    parent?: PublicKey,
 ): Promise<string> {
-  const reverseKey = getReverseKeyFromDomainKey(nameAccount, parent);
+    const reverseKey = getReverseKeyFromDomainKey(nameAccount, parent);
 
-  const { registry } = await NameRegistryState.retrieve(connection, reverseKey);
-  if (!registry.data) {
-    throw new NoAccountDataError("The registry data is empty");
-  }
+    const {registry} = await NameRegistryState.retrieve(connection, reverseKey);
+    if (!registry.data) {
+        throw new NoAccountDataError("The registry data is empty");
+    }
 
-  return deserializeReverse(registry.data, !!parent);
+    return deserializeReverse(registry.data, !!parent);
 }

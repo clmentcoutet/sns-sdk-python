@@ -1,0 +1,4 @@
+In the documentation https://sns.guide/domain-name/domain-direct-lookup.html
+the example for IPFS is wrong, it pass true instead of a RecordVersion object
+the correct example is:
+getDomainKeySync(record, RecordVersion.V1);
