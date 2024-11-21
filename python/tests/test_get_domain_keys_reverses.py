@@ -3,7 +3,6 @@ from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
 from get_domain_keys_with_reverses import get_domain_keys_with_reverses
-from tests.fixture import connection_url
 
 item = {
     "user": Pubkey.from_string("Fxuoy3gFjfJALhwkRcuKjRdechcgffUApeYAfMWck6w8"),
@@ -24,6 +23,7 @@ item = {
         "wallet-guide-9",
     ],
 }
+
 
 @pytest.mark.asyncio
 async def test_get_domain_keys_reverses(connection_url):

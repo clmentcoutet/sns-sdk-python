@@ -9,3 +9,5 @@ creation du type Registry car le renvoie d'un dictionnaire n'a pas de sens car n
 n'est plus dans le dictionnaire
 
 ajout du parametre optionel batch_size dans NameRegistryState.retrieve_batch
+
+ajout d'un parametre optionnel dans get_record_key pour pouvoir choisir la record version

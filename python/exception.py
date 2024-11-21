@@ -6,5 +6,13 @@ class NoAccountDataException(Exception):
     pass
 
 
-class InvalidInputError(Exception):
+class InvalidInputException(Exception):
+    pass
+
+
+class NoRecordDataException(Exception):
+    pass
+
+
+class InvalidRecordDataException(Exception):
     pass

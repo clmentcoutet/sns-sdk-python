@@ -4,18 +4,18 @@ from solders.pubkey import Pubkey
 from typing_extensions import NotRequired
 
 from constants import ROOT_DOMAIN_ACCOUNT, CENTRAL_STATE_SNS_RECORDS
-from exception import InvalidInputError
+from exception import InvalidInputException
 from get_hashed_name_sync import get_hashed_name_sync
 from get_name_account_key_sync import get_name_account_key
-from record import RecordVersion
+from types.record import RecordVersion
 
 
-class DeriveResult(TypedDict):
+class DeriveResp(TypedDict):
     pubkey: Pubkey
     hashed: bytes
 
 
-class Result(DeriveResult):
+class DomainKeyResp(DeriveResp):
     is_sub: bool
     parent: Optional[Pubkey]
     is_sub_record: NotRequired[bool]
@@ -25,7 +25,7 @@ def _derive(
     name: str,
     parent: Pubkey = ROOT_DOMAIN_ACCOUNT,
     class_key: Optional[Pubkey] = None,
-) -> DeriveResult:
+) -> DeriveResp:
     hashed = get_hashed_name_sync(name)
     pubkey = get_name_account_key(hashed, class_key, parent)
     return {
@@ -34,7 +34,7 @@ def _derive(
     }
 
 
-def get_domain_key(domain: str, record: Optional[RecordVersion] = None) -> Result:
+def get_domain_key(domain: str, record: Optional[RecordVersion] = None) -> DomainKeyResp:
     if domain.endswith(".sol"):
         domain = domain[:-4]
     record_class = CENTRAL_STATE_SNS_RECORDS if record == RecordVersion.V2 else None
@@ -61,7 +61,7 @@ def get_domain_key(domain: str, record: Optional[RecordVersion] = None) -> Resul
             "is_sub_record": True,
         }
     elif len(splitted) > 3:
-        raise InvalidInputError("Invalid domain")
+        raise InvalidInputException("Invalid domain")
     res = _derive(domain, ROOT_DOMAIN_ACCOUNT)
     return {
         **res,
