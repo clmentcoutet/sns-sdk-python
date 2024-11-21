@@ -29,9 +29,8 @@ async def reverse_lookup(
     """
     reverse_key = get_reverse_key_from_domain_key(name_account, parent)
 
-    res = await NameRegistryState.retrieve(connection, reverse_key)
-    registry = res["registry"]
-    if registry.data is None:
+    registry = await NameRegistryState.retrieve(connection, reverse_key)
+    if registry is None or registry.data is None:
         raise NoAccountDataException("The registry data is empty")
 
     return deserialize_reverse(registry.data, bool(parent is not None))

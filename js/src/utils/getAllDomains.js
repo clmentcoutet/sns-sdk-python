@@ -33,6 +33,7 @@ function getAllDomains(connection, wallet) {
                 },
             },
         ];
+        console.log("filters:", filters);
         const accounts = yield connection.getProgramAccounts(constants_1.NAME_PROGRAM_ID, {
             filters,
             // Only the public keys matter, not the data

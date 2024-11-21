@@ -10,6 +10,12 @@ from get_name_account_key_sync import get_name_account_key
 def get_reverse_key_from_domain_key(
     domain_key: Pubkey, parent: Optional[Pubkey] = None
 ) -> Pubkey:
+    """
+    Get the reverse lookup key from the domain key.
+    :param domain_key:
+    :param parent:
+    :return:
+    """
     hashed_reverse_lookup = get_hashed_name_sync(str(domain_key))
     return get_name_account_key(
         hashed_reverse_lookup, name_class=REVERSE_LOOKUP_CLASS, name_parent=parent

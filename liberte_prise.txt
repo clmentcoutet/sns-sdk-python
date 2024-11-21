@@ -1,0 +1,11 @@
+suppression du nft_owner dans NameRegistryState.retrieve,
+ca ne fait pas de sens de l'avoir ici
+
+factorisation de NameRegistryState.retrieve et NameRegistryState._retrieve_batch
+
+uniformisation du return de NameRegistryState.retrieve et NameRegistryState.retrieve_batch
+
+creation du type Registry car le renvoie d'un dictionnaire n'a pas de sens car nft_owner
+n'est plus dans le dictionnaire
+
+ajout du parametre optionel batch_size dans NameRegistryState.retrieve_batch
