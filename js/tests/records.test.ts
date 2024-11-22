@@ -28,7 +28,7 @@ import { getRecordKeySync } from "../src/record/getRecordKeySync";
 
 jest.setTimeout(20_000);
 
-const connection = new Connection(process.env.RPC_URL!);
+const connection = new Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 
 test("Records", async () => {
   const domain = "🍍";

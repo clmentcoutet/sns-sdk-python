@@ -186,5 +186,5 @@ async def test_create_record(connection_url):
         owner,
         blockhash,
     )
-    res = connection.simulate_transaction(tx)
-    print(res)
+    res = await connection.simulate_transaction(tx)
+    assert res.value.err is None

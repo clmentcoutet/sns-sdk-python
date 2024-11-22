@@ -34,7 +34,7 @@ const createRecordInstruction_1 = require("../src/bindings/createRecordInstructi
 const resolveSolRecordV1_1 = require("../src/resolve/resolveSolRecordV1");
 const getRecordKeySync_1 = require("../src/record/getRecordKeySync");
 globals_1.jest.setTimeout(20000);
-const connection = new web3_js_1.Connection(process.env.RPC_URL);
+const connection = new web3_js_1.Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 (0, globals_1.test)("Records", () => __awaiter(void 0, void 0, void 0, function* () {
     const domain = "🍍";
     (0, getIpfsRecord_1.getIpfsRecord)(connection, domain).then((e) => {

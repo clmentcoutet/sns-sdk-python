@@ -37,7 +37,7 @@ async def create_record_instruction(
         record != Record.SOL,
         UnsupportedRecordException("SOL record is not supported for this instruction"),
     )
-    res = get_domain_key(f"{record}.{domain}", RecordVersion.V1)
+    res = get_domain_key(f"{record.value}.{domain}", RecordVersion.V1)
     pubkey = res["pubkey"]
     hashed = res["hashed"]
     parent = res["parent"]

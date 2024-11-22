@@ -10,7 +10,7 @@ from exception import (
     InvalidEvmAddressException,
     InvalidARecordException,
     InvalidAAAARecordException,
-    InvalidRecordInputException,
+    InvalidRecordInputException, InvalidInjectiveAddressException,
 )
 from utils.check import check
 
@@ -20,7 +20,6 @@ async def serialize_record(
     record: Record,
 ) -> bytes:
     size = RECORD_V1_SIZE.get(record)
-
     if not size:
         if record == Record.CNAME or record == Record.TXT:
             string = idna.encode(string).decode()
@@ -29,7 +28,7 @@ async def serialize_record(
     if record == Record.SOL:
         raise UnsupportedRecordException("Use `serialize_sol_record` for SOL record")
 
-    elif record == Record.ETH or Record.BSC:
+    elif record == Record.ETH or record == Record.BSC:
         check(
             string.startswith("0x"),
             InvalidEvmAddressException("The record content must start with `0x`"),
@@ -40,11 +39,11 @@ async def serialize_record(
         hrp, data = bech32_decode(string)
         check(
             hrp == "inj",
-            InvalidEvmAddressException("The record content must start with `inj`"),
+            InvalidInjectiveAddressException("The record content must start with `inj`"),
         )
         check(
             len(data) == 20,
-            InvalidEvmAddressException("The record content must be 20 bytes long"),
+            InvalidInjectiveAddressException("The record content must be 20 bytes long"),
         )
         return bytes(data)
 

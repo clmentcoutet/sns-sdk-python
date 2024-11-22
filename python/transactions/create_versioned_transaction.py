@@ -4,6 +4,7 @@ from solders.hash import Hash
 from solders.instruction import Instruction
 from solders.keypair import Keypair
 from solders.message import Message
+from solders.null_signer import NullSigner
 from solders.pubkey import Pubkey
 from solders.transaction import VersionedTransaction
 
@@ -37,7 +38,7 @@ def create_versioned_transaction(
     # other operations that does not require a signature yet
     num_required_signatures = message.header.num_required_signatures
     if signers is None:
-        signers = [Keypair()] * num_required_signatures
+        signers = [NullSigner(payer)] * num_required_signatures
 
     check(
         len(signers) == num_required_signatures,
