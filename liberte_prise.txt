@@ -11,3 +11,7 @@ n'est plus dans le dictionnaire
 ajout du parametre optionel batch_size dans NameRegistryState.retrieve_batch
 
 ajout d'un parametre optionnel dans get_record_key pour pouvoir choisir la record version
+
+utilisation exclusive de VersionedTransaction plutot que Transaction
+
+factorisation de int.py avec une classe abstraite

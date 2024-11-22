@@ -1,10 +1,18 @@
+import os
+from dotenv import load_dotenv
 import pytest
 from solders.pubkey import Pubkey
 
 
+load_dotenv(".env.dev")
+
+
 @pytest.fixture(scope="session", autouse=True)
 def connection_url():
-    return "https://quaint-cold-snow.solana-mainnet.quiknode.pro/39ddb64963c9a34975f35d7508d67751de89e1a2"
+    private_key = os.getenv("PRIVATE_KEY")
+    if not private_key:
+        raise ValueError("PRIVATE_KEY is not set in the .env.dev file")
+    return private_key
 
 
 @pytest.fixture(scope="session", autouse=True)

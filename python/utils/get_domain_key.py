@@ -5,9 +5,9 @@ from typing_extensions import NotRequired
 
 from constants import ROOT_DOMAIN_ACCOUNT, CENTRAL_STATE_SNS_RECORDS
 from exception import InvalidInputException
-from get_hashed_name_sync import get_hashed_name_sync
-from get_name_account_key_sync import get_name_account_key
-from types.record import RecordVersion
+from custom_types.record import RecordVersion
+from utils.get_hashed_name import get_hashed_name
+from utils.get_name_account_key import get_name_account_key
 
 
 class DeriveResp(TypedDict):
@@ -26,7 +26,7 @@ def _derive(
     parent: Pubkey = ROOT_DOMAIN_ACCOUNT,
     class_key: Optional[Pubkey] = None,
 ) -> DeriveResp:
-    hashed = get_hashed_name_sync(name)
+    hashed = get_hashed_name(name)
     pubkey = get_name_account_key(hashed, class_key, parent)
     return {
         "pubkey": pubkey,
@@ -34,7 +34,9 @@ def _derive(
     }
 
 
-def get_domain_key(domain: str, record: Optional[RecordVersion] = None) -> DomainKeyResp:
+def get_domain_key(
+    domain: str, record: Optional[RecordVersion] = None
+) -> DomainKeyResp:
     if domain.endswith(".sol"):
         domain = domain[:-4]
     record_class = CENTRAL_STATE_SNS_RECORDS if record == RecordVersion.V2 else None
@@ -51,9 +53,9 @@ def get_domain_key(domain: str, record: Optional[RecordVersion] = None) -> Domai
         }
     elif len(splitted) == 3 and record:
         parent_key = _derive(splitted[2])["pubkey"]
-        sub_key = _derive(splitted[1], parent_key)["pubkey"]
+        sub_key = _derive(b"\x00".decode() + splitted[1], parent_key)["pubkey"]
         record_prefix = b"\x02" if record == RecordVersion.V2 else b"\x01"
-        res = _derive(str(record_prefix) + splitted[0], sub_key, record_class)
+        res = _derive(record_prefix.decode() + splitted[0], sub_key, record_class)
         return {
             **res,
             "is_sub": True,

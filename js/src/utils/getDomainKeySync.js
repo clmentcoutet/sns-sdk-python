@@ -40,6 +40,7 @@ const getDomainKeySync = (domain, record) => {
         // Sub record
         const recordPrefix = record === record_1.RecordVersion.V2 ? `\x02` : `\x01`;
         const result = _deriveSync(recordPrefix.concat(splitted[0]), subKey, recordClass);
+        console.log("result:", result);
         return Object.assign(Object.assign({}, result), { isSub: true, parent: parentKey, isSubRecord: true });
     }
     else if (splitted.length >= 3) {

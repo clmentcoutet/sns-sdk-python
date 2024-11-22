@@ -4,8 +4,8 @@ from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
 from NameRegistryState import NameRegistryState
-from deserialize_reverse import deserialize_reverse
-from get_reverse_key_from_domain_key import get_reverse_key_from_domain_key
+from utils.deserialize_reverse import deserialize_reverse
+from utils.get_reverse_key_from_domain_key import get_reverse_key_from_domain_key
 
 
 async def reverse_lookup_batch(

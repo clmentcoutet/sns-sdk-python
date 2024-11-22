@@ -16,9 +16,10 @@ const runTest = () => __awaiter(void 0, void 0, void 0, function* () {
     const connection = new web3_js_1.Connection("https://quaint-cold-snow.solana-mainnet.quiknode.pro/39ddb64963c9a34975f35d7508d67751de89e1a2");
     const nameAccount = new web3_js_1.PublicKey("HKKp49qGWXd639QsuH7JiLijfVW5UtCVY4s1n2HANwEA"); // Replace with a valid domain public key
     const domain = "IPFS.bonfida.sol"; // Replace with a valid domain name
+    const sub = "test.🇺🇸.sol";
     try {
         // Perform reverse lookup and verify it returns a valid string
-        const res = yield (0, src_1.getAllDomains)(connection, nameAccount);
+        const res = yield (0, src_1.getEmailRecord)(connection, sub);
         // Example expectation: It should return a non-empty string
         console.log("res runTest:", res);
     }

@@ -1,20 +1,12 @@
 from typing import Optional
 
-from borsh_construct import CStruct, U8
 from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
 from NameRegistryState import NameRegistryState
-from deserialize_reverse import deserialize_reverse
 from exception import NoAccountDataException
-from get_reverse_key_from_domain_key import get_reverse_key_from_domain_key
-
-HEADER_LEN = 96
-schema = CStruct(
-    "parentName" / U8[32],
-    "owner" / U8[32],
-    "class" / U8[32],
-)
+from utils.deserialize_reverse import deserialize_reverse
+from utils.get_reverse_key_from_domain_key import get_reverse_key_from_domain_key
 
 
 async def reverse_lookup(

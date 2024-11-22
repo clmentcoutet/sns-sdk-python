@@ -3,8 +3,8 @@ from typing import List, TypedDict
 from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
-from get_all_domains import get_all_domains
-from reverse_lookup_batch import reverse_lookup_batch
+from utils.get_all_domains import get_all_domains
+from utils.reverse_lookup_batch import reverse_lookup_batch
 
 
 class DomainKeysReversesResp(TypedDict):

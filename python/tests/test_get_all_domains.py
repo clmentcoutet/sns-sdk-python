@@ -2,7 +2,7 @@ import pytest
 from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
-from get_all_domains import get_all_domains
+from utils.get_all_domains import get_all_domains
 
 item = {
     "user": Pubkey.from_string("Fxuoy3gFjfJALhwkRcuKjRdechcgffUApeYAfMWck6w8"),

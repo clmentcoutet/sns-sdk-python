@@ -2,14 +2,14 @@ from typing import Optional
 
 from solders.pubkey import Pubkey
 
-from get_domain_key import get_domain_key
-from types.record import Record, RecordVersion
+from custom_types.record import Record, RecordVersion
+from utils.get_domain_key import get_domain_key
 
 
 async def get_record_key(
-        domain: str,
-        record: Record,
-        record_version: Optional[RecordVersion] = RecordVersion.V1,
+    domain: str,
+    record: Record,
+    record_version: Optional[RecordVersion] = RecordVersion.V1,
 ) -> Pubkey:
     """
     Get the key for a record in the NameRegistry program.

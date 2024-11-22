@@ -25,6 +25,7 @@ const deserializeRecord_1 = require("./deserializeRecord");
 function getRecord(connection, domain, record, deserialize) {
     return __awaiter(this, void 0, void 0, function* () {
         const pubkey = (0, getRecordKeySync_1.getRecordKeySync)(domain, record);
+        console.log("pubkey:", pubkey);
         let { registry } = yield state_1.NameRegistryState.retrieve(connection, pubkey);
         if (!registry.data) {
             throw new error_1.NoRecordDataError(`The record data is empty`);

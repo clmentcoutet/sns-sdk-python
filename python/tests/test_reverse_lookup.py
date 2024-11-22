@@ -1,8 +1,8 @@
 import pytest
 from solana.rpc.async_api import AsyncClient
 
-from reverse_lookup import reverse_lookup
-from reverse_lookup_batch import reverse_lookup_batch
+from utils.reverse_lookup import reverse_lookup
+from utils.reverse_lookup_batch import reverse_lookup_batch
 
 
 @pytest.mark.asyncio

@@ -3,9 +3,9 @@ from nacl.signing import VerifyKey
 
 
 def check_sol_record(
-        record: bytes,
-        signed_record: bytes,
-        pubkey: Pubkey,
+    record: bytes,
+    signed_record: bytes,
+    pubkey: Pubkey,
 ) -> bool:
     """
     Check if a SOL record is valid, on ed25519 curve.

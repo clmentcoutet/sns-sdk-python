@@ -2,7 +2,7 @@ import pytest
 from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
-from get_domain_keys_with_reverses import get_domain_keys_with_reverses
+from utils.get_domain_keys_with_reverses import get_domain_keys_with_reverses
 
 item = {
     "user": Pubkey.from_string("Fxuoy3gFjfJALhwkRcuKjRdechcgffUApeYAfMWck6w8"),

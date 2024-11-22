@@ -7,12 +7,14 @@ from solders.pubkey import Pubkey
 from NameRegistryState import NameRegistryState
 from exception import InvalidRecordDataException
 from record.check_sol_record import check_sol_record
-from types.record import Record, RECORD_V1_SIZE
+from custom_types.record import Record, RECORD_V1_SIZE
 
 
 def _trim_null_padding_idx(buffer: bytes) -> int:
     """Find the last non-null byte in the buffer."""
-    return len(buffer) - next((i for i, byte in enumerate(reversed(buffer)) if byte != 0), len(buffer))
+    return len(buffer) - next(
+        (i for i, byte in enumerate(reversed(buffer)) if byte != 0), len(buffer)
+    )
 
 
 def _is_valid_ip(address: str) -> bool:
@@ -32,7 +34,9 @@ def _process_utf8_record(buffer: bytes, idx: int, record: Record) -> str:
     return str_data
 
 
-def _process_sol_record(buffer: bytes, record_key: Pubkey, registry: NameRegistryState) -> str | None:
+def _process_sol_record(
+    buffer: bytes, record_key: Pubkey, registry: NameRegistryState
+) -> str | None:
     """Handle the special case for SOL records."""
     expected_buffer = buffer[:32] + bytes(record_key)
     expected = expected_buffer.hex().encode("utf-8")
@@ -47,7 +51,10 @@ def _process_old_record(buffer: bytes, idx: int, record: Record) -> str | None:
     address = buffer[:idx].decode("utf-8")
     if record == Record.Injective:
         hrp, data = bech32_decode(address)
-        if hrp == "inj" and len(bytes(convertbits(data, 5, 8, False))) == 20:
+        if not data:
+            raise InvalidRecordDataException("The record data is malformed")
+        res = convertbits(data, 5, 8, False)
+        if hrp == "inj" and res and len(bytes(res)) == 20:
             return address
     elif record in [Record.BSC, Record.ETH]:
         if address.startswith("0x") and len(bytes.fromhex(address[2:])) == 20:
@@ -64,6 +71,8 @@ def _process_current_record(buffer: bytes, size: int, record: Record) -> str | N
         return "0x" + buffer[:size].hex()
     elif record == Record.Injective:
         bech32_data = convertbits(buffer[:size], 8, 5, True)
+        if not bech32_data:
+            raise InvalidRecordDataException("The record data is malformed")
         return bech32_encode("inj", bech32_data)
     elif record in [Record.A, Record.AAAA]:
         return str(ipaddress.ip_address(buffer[:size]))
@@ -80,6 +89,8 @@ def deserialize_record(
     """
     Deserialize a record based on its type and format.
     """
+    if not registry:
+        return None
     buffer = registry.data
     if not buffer or buffer == bytes(len(buffer)):
         return None

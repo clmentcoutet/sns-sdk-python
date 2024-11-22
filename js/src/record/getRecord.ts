@@ -36,6 +36,7 @@ export async function getRecord(
   deserialize?: boolean,
 ) {
   const pubkey = getRecordKeySync(domain, record);
+  console.log("pubkey:", pubkey);
   let { registry } = await NameRegistryState.retrieve(connection, pubkey);
 
   if (!registry.data) {

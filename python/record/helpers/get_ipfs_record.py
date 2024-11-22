@@ -1,7 +1,7 @@
 from solana.rpc.async_api import AsyncClient
 
 from record.get_record import get_record
-from types.record import Record
+from custom_types.record import Record
 
 
 def get_ipfs_record(connection: AsyncClient, domain: str):
@@ -11,4 +11,4 @@ def get_ipfs_record(connection: AsyncClient, domain: str):
     :param domain: The .sol domain name
     :returns:
     """
-    return get_record(connection, domain, Record.IPFS)
+    return get_record(connection, domain, Record.IPFS, True)
