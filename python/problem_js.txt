@@ -1,0 +1,21 @@
+In the documentation https://sns.guide/domain-name/domain-direct-lookup.html
+the example for IPFS is wrong, it pass true instead of a RecordVersion object
+the correct example is:
+getDomainKeySync(record, RecordVersion.V1);
+
+Typo in the documentation of reverseLookupBatch
+miss an 's' in the word 'nameAccounts'
+
+simplify the function reverseLookupBatch by using the function getReverseKeyFromDomainKey
+
+redondance in NameRegistryState, can be factorized by reusing the function fn() in _retrieveBatch
+
+Function resolveSolRecordV2 untested
+
+function const [favKey] = FavouriteDomain.getKeySync(
+    NAME_OFFERS_ID,
+    new PublicKey(owner),
+  ); in the file favorite-domain.ts pass PublicKey(owner) instead of owner (already a PublicKey)
+
+Inconsistent naming of the file favorite-domain.ts and the class FavouriteDomain
+favorite !== favourite

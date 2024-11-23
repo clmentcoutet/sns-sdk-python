@@ -4,6 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Clément Coutet <clement.coutet@grenoble-inp.org>"]
 readme = "README.md"
+packages = [
+    { include = "src", from = "python" }
+]
+include = ["python/src/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -21,9 +25,27 @@ python-dotenv = "^1.0.1"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+pythonpath = ["python/src"]
+testpaths = ["python/tests"]
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.mypy]
+python_version = "3.10"  # Specify your Python version
+ignore_missing_imports = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+strict_optional = true
+
+# Specify your source and test directories
+files = ["python/src"]
 

@@ -2,26 +2,30 @@ import pytest
 from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
-from bindings.create_record_instruction import create_record_instruction
-from custom_types.record import Record
-from record.get_records import get_records
-from record.helpers.get_arweave_record import get_arweave_record
-from record.helpers.get_bsc_record import get_bsc_record
-from record.helpers.get_btc_record import get_btc_record
-from record.helpers.get_discord_record import get_discord_record
-from record.helpers.get_doge_record import get_doge_record
-from record.helpers.get_email_record import get_email_record
-from record.helpers.get_eth_record import get_eth_record
-from record.helpers.get_github_record import get_github_record
-from record.helpers.get_ipfs_record import get_ipfs_record
-from record.helpers.get_ltc_record import get_ltc_record
-from record.helpers.get_reddit_record import get_reddit_record
-from record.helpers.get_telegram_record import get_telegram_record
-from record.helpers.get_twitter_record import get_twitter_record
-from record.helpers.get_url_record import get_url_record
-from transactions.create_versioned_transaction import create_versioned_transaction
-
-from tests.fixture import connection_url
+from NameRegistryState import NameRegistryState
+from bindings import create_record_instruction
+from custom_types import Record
+from record import (
+    get_arweave_record,
+    get_bsc_record,
+    get_btc_record,
+    get_discord_record,
+    get_doge_record,
+    get_email_record,
+    get_eth_record,
+    get_github_record,
+    get_ipfs_record,
+    get_ltc_record,
+    get_reddit_record,
+    get_telegram_record,
+    get_twitter_record,
+    get_url_record,
+    get_records,
+    get_record_key,
+    deserialize_record, serialize_record,
+)
+from resolve import resolve_sol_record_v1
+from transactions import create_versioned_transaction
 
 
 @pytest.mark.asyncio
@@ -188,3 +192,63 @@ async def test_create_record(connection_url):
     )
     res = await connection.simulate_transaction(tx)
     assert res.value.err is None
+
+
+@pytest.mark.asyncio
+async def test_check_sol_record(connection_url):
+    connection = AsyncClient(connection_url)
+    domain = "wallet-guide-4"
+    owner = Pubkey.from_string("Fxuoy3gFjfJALhwkRcuKjRdechcgffUApeYAfMWck6w8")
+
+    res = await resolve_sol_record_v1(connection, owner, domain)
+
+    assert res == Pubkey.from_string("Hf4daCT4tC2Vy9RCe9q8avT68yAsNJ1dQe6xiQqyGuqZ")
+
+
+@pytest.mark.asyncio
+async def test_serialize_deserialize():
+    items = [
+        {"content": "this is a test", "record": Record.TXT},
+        {
+            "content": "inj13glcnaum2xqv5a0n0hdsmv0f6nfacjsfvrh5j9",
+            "record": Record.Injective,
+        },
+        {"content": "example.com", "record": Record.CNAME},
+        {"content": "example.com", "record": Record.CNAME},
+        {"content": "0xc0ffee254729296a45a3885639ac7e10f9d54979", "record": Record.ETH},
+        {"content": "1.1.1.4", "record": Record.A},
+        {"content": "2345:425:2ca1::567:5673:23b5", "record": Record.AAAA},
+        {"content": "username", "record": Record.Discord},
+    ]
+
+    for e in items:
+        ser = serialize_record(e["content"], e["record"])
+        registry = NameRegistryState(
+            owner=bytes(Pubkey.default()),
+            parent_name=bytes(Pubkey.default()),
+            class_name=bytes(Pubkey.default()),
+        )
+        registry.data = ser
+        des = deserialize_record(registry, e["record"], Pubkey.default())
+        assert des == e["content"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "domain, record, expected",
+    [
+        ("domain1.sol", Record.SOL, "ATH9akc5pi1PWDB39YY7VCoYzCxmz8XVj23oegSoNSPL"),
+        ("sub.domain2.sol", Record.SOL, "AEgJVf6zaQfkyYPnYu8Y9Vxa1Sy69EtRSP8iGubx5MnC"),
+        ("domain3.sol", Record.Url, "EuxtWLCKsdpwM8ftKjnD2Q8vBdzZunh7DY1mHwXhLTqx"),
+        ("sub.domain4.sol", Record.Url, "64nv6HSbifdUgdWst48V4YUB3Y3uQXVQRD4iDZPd9qGx"),
+        ("domain5.sol", Record.IPFS, "2uRMeYzKXaYgFVQ1Yh7fKyZWcxsFUMgpEwMi19sVjwjk"),
+        (
+            "sub.domain6.sol",
+            Record.IPFS,
+            "61JdnEhbd2bEfxnu2uQ38gM2SUry2yY8kBMEseYh8dDy",
+        ),
+    ],
+)
+async def test_get_record_key(domain, record, expected):
+    result = await get_record_key(domain, record)
+    assert result == Pubkey.from_string(expected)

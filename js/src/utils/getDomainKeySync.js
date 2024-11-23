@@ -25,7 +25,6 @@ const getDomainKeySync = (domain, record) => {
     }
     const recordClass = record === record_1.RecordVersion.V2 ? sns_records_1.CENTRAL_STATE_SNS_RECORDS : undefined;
     const splitted = domain.split(".");
-    console.log("splitted:", splitted);
     if (splitted.length === 2) {
         const prefix = buffer_1.Buffer.from([record ? record : 0]).toString();
         const sub = prefix.concat(splitted[0]);
@@ -34,7 +33,6 @@ const getDomainKeySync = (domain, record) => {
         return Object.assign(Object.assign({}, result), { isSub: true, parent: parentKey });
     }
     else if (splitted.length === 3 && !!record) {
-        console.log("splitted:", splitted);
         // Parent key
         const { pubkey: parentKey } = _deriveSync(splitted[2]);
         // Sub domain

@@ -1,5 +1,5 @@
-from custom_types.record import RecordVersion
-from utils.get_domain_key import get_domain_key
+from custom_types import RecordVersion
+from utils import get_domain_key
 
 
 def test_get_domain_key(domain_name, domain_key):
