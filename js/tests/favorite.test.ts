@@ -10,7 +10,7 @@ import { getDomainKeySync } from "../src/utils/getDomainKeySync";
 
 jest.setTimeout(10_000);
 
-const connection = new Connection(process.env.RPC_URL!);
+const connection = new Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 
 test("Favorite domain", async () => {
   const items = [

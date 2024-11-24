@@ -19,3 +19,5 @@ function const [favKey] = FavouriteDomain.getKeySync(
 
 Inconsistent naming of the file favorite-domain.ts and the class FavouriteDomain
 favorite !== favourite
+
+In favorite.test.ts, the second test failed

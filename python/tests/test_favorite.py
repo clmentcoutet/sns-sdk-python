@@ -1,39 +1,92 @@
+# Test cases for favorite domain
+import pytest
 from solana.rpc.async_api import AsyncClient
+from solders.keypair import Keypair
 from solders.pubkey import Pubkey
 
+from favorite_domain import get_favorite_domain
 
-async def test_favorite_domain(connection_url):
+TEST_CASES = [
+    (
+        Pubkey.from_string("FidaeBkZkvDqi1GXNEwB8uWmj9Ngx2HXSS5nyGRuVFcZ"),
+        {
+            "domain": Pubkey.from_string("Crf8hzfthWGbGbLTVCiqRqV5MVnbpHB1L9KQMd6gsinb"),
+            "reverse": "bonfida",
+            "stale": True,
+        },
+    ),
+    (
+        Pubkey.from_string("HKKp49qGWXd639QsuH7JiLijfVW5UtCVY4s1n2HANwEA"),
+        {
+            "domain": Pubkey.from_string("Crf8hzfthWGbGbLTVCiqRqV5MVnbpHB1L9KQMd6gsinb"),
+            "reverse": "bonfida",
+            "stale": False, #TODO Should be True ?
+        },
+    ),
+    (
+        Pubkey.from_string("A41TAGFpQkFpJidLwH37ydunE7Q3jpBaS228RkoXiRQk"),
+        {
+            "domain": Pubkey.from_string("BaQq8Uib3Aw5SPBedC8MdYCvpfEC9iLkUMHc5M74sAjv"),
+            "reverse": "1.00728",
+            "stale": False,
+        },
+    ),
+]
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("user, expected_favorite", TEST_CASES)
+async def test_favorite_domain(user, expected_favorite, connection_url):
+    # Initialize the connection
     connection = AsyncClient(connection_url)
+
+    # Call the function under test
+    fav = await get_favorite_domain(connection, user)
+
+    # Assertions
+    assert fav["domain"] == expected_favorite["domain"]
+    assert fav["reverse"] == expected_favorite["reverse"]
+    assert fav["stale"] == expected_favorite["stale"]
+
+    # Close the connection after test
+    await connection.close()
+
+@pytest.mark.asyncio
+async def test_multiple_favorite_domains(connection_url):
+    connection = AsyncClient(connection_url)
+
+    # Test data
     items = [
+        # Non-tokenized
         {
-            "user": Pubkey.from_string("FidaeBkZkvDqi1GXNEwB8uWmj9Ngx2HXSS5nyGRuVFcZ"),
-            "favorite": {
-                "domain": Pubkey.from_string("Crf8hzfthWGbGbLTVCiqRqV5MVnbpHB1L9KQMd6gsinb"),
-                "reverse": "bonfida",
-                "stale": True,
-            },
+            "wallet": Pubkey.from_string("HKKp49qGWXd639QsuH7JiLijfVW5UtCVY4s1n2HANwEA"),
+            "domain": "bonfida",
+        },
+        # Stale non-tokenized
+        {
+            "wallet": Pubkey.from_string("FidaeBkZkvDqi1GXNEwB8uWmj9Ngx2HXSS5nyGRuVFcZ"),
+            "domain": None,
+        },
+        # Random pubkey
+        {"wallet": Keypair().pubkey(), "domain": None},
+        # Tokenized
+        {
+            "wallet": Pubkey.from_string("36Dn3RWhB8x4c83W6ebQ2C2eH9sh5bQX2nMdkP2cWaA4"),
+            "domain": "fav-tokenized",
         },
         {
-            "user": Pubkey.from_string("HKKp49qGWXd639QsuH7JiLijfVW5UtCVY4s1n2HANwEA"),
-            "favorite": {
-                "domain": Pubkey.from_string("Crf8hzfthWGbGbLTVCiqRqV5MVnbpHB1L9KQMd6gsinb"),
-                "reverse": "bonfida",
-                "stale": False,
-            },
-        },
-        {
-            "user": Pubkey.from_string("A41TAGFpQkFpJidLwH37ydunE7Q3jpBaS228RkoXiRQk"),
-            "favorite": {
-                "domain": Pubkey.from_string("BaQq8Uib3Aw5SPBedC8MdYCvpfEC9iLkUMHc5M74sAjv"),
-                "reverse": "1.00728",
-                "stale": False,
-            },
+            "wallet": Pubkey.from_string("A41TAGFpQkFpJidLwH37ydunE7Q3jpBaS228RkoXiRQk"),
+            "domain": "1.00728",
         },
     ]
 
-    for item in items:
-        fav = await get_favorite_domain(connection, item["user"])
+    # Call the function under test
+    result = await get_multiple_favorite_domains(
+        connection, [item["wallet"] for item in items]
+    )
 
-        assert fav["domain"] == item["favorite"]["domain"]
-        assert fav["reverse"] == item["favorite"]["reverse"]
-        assert fav["stale"] == item["favorite"]["stale"]
+    # Assert the results
+    for idx, expected in enumerate(items):
+        assert result[idx] == expected["domain"]
+
+    # Close the connection after test
+    await connection.close()

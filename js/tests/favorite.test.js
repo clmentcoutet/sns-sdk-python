@@ -16,7 +16,7 @@ const web3_js_1 = require("@solana/web3.js");
 const registerFavorite_1 = require("../src/bindings/registerFavorite");
 const getDomainKeySync_1 = require("../src/utils/getDomainKeySync");
 globals_1.jest.setTimeout(10000);
-const connection = new web3_js_1.Connection(process.env.RPC_URL);
+const connection = new web3_js_1.Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 (0, globals_1.test)("Favorite domain", () => __awaiter(void 0, void 0, void 0, function* () {
     const items = [
         {

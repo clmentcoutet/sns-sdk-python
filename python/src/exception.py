@@ -251,3 +251,12 @@ class WrongValidationException(SNSException):
 
 class NoLamportsDataException(Exception):
     pass
+
+
+class SolanaJSONRPCException(Exception):
+    def __init__(self, code: int, message: str):
+        super().__init__(message)
+        self.code = code
+
+    def __str__(self) -> str:
+        return f"SolanaJSONRPCException ({self.code}): {self.args[0]}"

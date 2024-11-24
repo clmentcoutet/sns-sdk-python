@@ -8,7 +8,6 @@ export const retrieveNftOwnerV2 = async (
 ) => {
   try {
     const mint = getDomainMint(nameAccount);
-
     const largestAccounts = await connection.getTokenLargestAccounts(mint);
     if (largestAccounts.value.length === 0) {
       return null;

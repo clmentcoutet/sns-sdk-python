@@ -20,9 +20,7 @@ const serializeRecord = (str, record) => {
     const size = record_1.RECORD_V1_SIZE.get(record);
     if (!size) {
         if (record === record_1.Record.CNAME || record === record_1.Record.TXT) {
-            console.log("str before", str);
             str = (0, punycode_1.encode)(str);
-            console.log("str after", str);
         }
         return buffer_1.Buffer.from(str, "utf-8");
     }
@@ -35,7 +33,6 @@ const serializeRecord = (str, record) => {
     }
     else if (record === record_1.Record.Injective) {
         const decoded = base_1.bech32.decodeToBytes(str);
-        console.log(decoded);
         (0, check_1.check)(decoded.prefix === "inj", new error_1.InvalidInjectiveAddressError("The record content must start with `inj"));
         (0, check_1.check)(decoded.bytes.length === 20, new error_1.InvalidInjectiveAddressError(`The record data must be 20 bytes long`));
         return buffer_1.Buffer.from(decoded.bytes);

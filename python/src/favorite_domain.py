@@ -1,13 +1,16 @@
-from typing import TypedDict, Tuple
+from typing import TypedDict, Tuple, List
 
 from borsh_construct import CStruct, Bytes, U8
 from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
+from spl.token.instructions import get_associated_token_address
 
 from NameRegistryState import NameRegistryState
-from constants import NAME_OFFERS_ID
+from constants import NAME_OFFERS_ID, ROOT_DOMAIN_ACCOUNT, NAME_PROGRAM_ID
 from exception import FavouriteDomainNotFoundException
 from nft import retrieve_nft_owner
+from nft.gert_domain_mint import get_domain_mint
+from utils import reverse_lookup, get_reverse_key_from_domain_key, deserialize_reverse
 
 
 class GetFavoriteDomainResp(TypedDict):
@@ -19,7 +22,7 @@ class GetFavoriteDomainResp(TypedDict):
 class FavoriteDomain:
     SCHEMA = CStruct(
         "tag" / U8,
-        "name_account" / Bytes(32),
+        "name_account" / U8[32]
     )
 
     def __init__(self, tag: int, name_account: bytes):
@@ -28,7 +31,8 @@ class FavoriteDomain:
 
     @classmethod
     def deserialize(cls, data: bytes) -> "FavoriteDomain":
-        return cls(*cls.SCHEMA.deserialize(data))
+        res = cls.SCHEMA.parse(data)
+        return cls(res.tag, res.name_account)
 
     @classmethod
     async def retrieve(cls, connection: AsyncClient, key: Pubkey) -> 'FavoriteDomain':
@@ -56,10 +60,99 @@ async def get_favorite_domain(
         owner
     )
     favorite = await FavoriteDomain.retrieve(connection, favorite_key)
+    favorite.name_account = Pubkey(favorite.name_account)
     registry = await NameRegistryState.retrieve(
         connection,
-        Pubkey.from_bytes(favorite.name_account)
+        favorite.name_account
     )
-    nft_owner = await retrieve_nft_owner(connection, owner)
+    nft_owner = await retrieve_nft_owner(connection, favorite.name_account)
 
-    domain_owner =
+    domain_owner = nft_owner if nft_owner else registry.owner
+
+    parent_name_bool = registry.parent_name == ROOT_DOMAIN_ACCOUNT
+    reverse = await reverse_lookup(
+        connection,
+        favorite.name_account,
+        None if parent_name_bool else registry.parent_name
+    )
+
+    if not parent_name_bool:
+        parent_reverse = await reverse_lookup(
+            connection,
+            registry.parent_name
+        )
+        reverse = f"{reverse}.{parent_reverse}"
+
+    return {
+        "domain": favorite.name_account,
+        "reverse": reverse,
+        "stale": not domain_owner == owner
+    }
+
+
+async def get_multiple_favorite_dmomains(
+        connection: AsyncClient,
+        wallets: List[Pubkey]
+) -> List[str | None]:
+    res: List[str | None] = []
+
+    fav_keys = [
+        FavoriteDomain.get_key(NAME_OFFERS_ID, wallet)[0]
+        for wallet in wallets
+    ]
+
+    accounts_info = await connection.get_multiple_accounts(fav_keys)
+    fav_domains = [
+        FavoriteDomain.deserialize(e.data).name_account
+        if e and e.data else Pubkey.default()
+        for e in accounts_info.value
+    ]
+
+    domains_info = await connection.get_multiple_accounts(fav_domains)
+    parents_reverse_keys: List[Pubkey] = []
+    reverse_keys: List[Pubkey] = []
+    for i, elem in enumerate(domains_info.value):
+        parent = (
+            Pubkey.from_bytes(elem.data[:32])
+            if elem and elem.data
+            else Pubkey.default()
+        )
+        is_sub = (
+                elem.owner == NAME_PROGRAM_ID
+                and not parent == ROOT_DOMAIN_ACCOUNT
+        )
+        parents_reverse_keys.append(
+            get_reverse_key_from_domain_key(parent)
+            if is_sub else Pubkey.default()
+        )
+        reverse_keys.append(
+            get_reverse_key_from_domain_key(
+                fav_domains[i], parent if is_sub else None
+            )
+        )
+
+    atas = [
+        get_associated_token_address(get_domain_mint(elem), wallets[i])
+        for i, elem in enumerate(fav_domains)
+    ]
+
+    reverses = await connection.get_multiple_accounts(reverse_keys)
+    token_accounts = await connection.get_multiple_accounts(atas)
+    parents_reverses = await connection.get_multiple_accounts(parents_reverse_keys)
+
+    for i, elem in enumerate(wallets):
+        parent_reverse = ""
+        domain_info = domains_info.value[i]
+        reverse = reverses.value[i]
+        token_account = token_accounts.value[i]
+        parent_reverse_account = parents_reverses.value[i]
+
+        if not domain_info or not reverse:
+            res.append(None)
+            continue
+
+        if parent_reverse_account and parent_reverse_account == NAME_PROGRAM_ID:
+            des = deserialize_reverse(parent_reverse_account.data[96:])
+            parent_reverse += f".{des}"
+
+        native_owner = Pubkey(domain_info.data[32:64])
