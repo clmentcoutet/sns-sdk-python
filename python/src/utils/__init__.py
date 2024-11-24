@@ -7,6 +7,7 @@ from .get_domain_keys_with_reverses import get_domain_keys_with_reverses
 from .get_domain_price_from_name import get_domain_price_from_name
 from .get_hashed_name import get_hashed_name
 from .get_name_account_key import get_name_account_key
+from .get_pyth_feed_account_key import get_pyth_feed_account_key
 from .get_reverse_key import get_reverse_key
 from .get_reverse_key_from_domain_key import get_reverse_key_from_domain_key
 from .get_tokenized_domains import get_tokenized_domains
@@ -23,6 +24,7 @@ __all__ = [
     "get_domain_price_from_name",
     "get_hashed_name",
     "get_name_account_key",
+    "get_pyth_feed_account_key",
     "get_reverse_key",
     "get_reverse_key_from_domain_key",
     "get_tokenized_domains",

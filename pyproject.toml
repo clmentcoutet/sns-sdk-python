@@ -23,6 +23,7 @@ base58 = "^2.1.1"
 bech32 = "^1.2.0"
 python-dotenv = "^1.0.1"
 grapheme = "^0.6.0"
+pythclient = "^0.1.24"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
