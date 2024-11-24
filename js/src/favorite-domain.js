@@ -157,6 +157,7 @@ const getMultipleFavoriteDomains = (connection, wallets) => __awaiter(void 0, vo
         }
         const nativeOwner = new web3_js_1.PublicKey(domainInfo === null || domainInfo === void 0 ? void 0 : domainInfo.data.slice(32, 64));
         if (nativeOwner.equals(wallets[i])) {
+            console.log("Non tokenized", i);
             result.push((0, deserializeReverse_1.deserializeReverse)(rev === null || rev === void 0 ? void 0 : rev.data.slice(96), true) + parentRev);
             continue;
         }
@@ -168,6 +169,7 @@ const getMultipleFavoriteDomains = (connection, wallets) => __awaiter(void 0, vo
         const decoded = spl_token_1.AccountLayout.decode(tokenAcc.data);
         // Tokenized
         if (Number(decoded.amount) === 1) {
+            console.log("Tokenized", i);
             result.push((0, deserializeReverse_1.deserializeReverse)(rev === null || rev === void 0 ? void 0 : rev.data.slice(96)) + parentRev);
             continue;
         }

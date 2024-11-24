@@ -17,6 +17,6 @@ def get_reverse_key_from_domain_key(
     :return:
     """
     hashed_reverse_lookup = get_hashed_name(str(domain_key))
-    return get_name_account_key( # type: ignore[no-any-return]
+    return get_name_account_key(  # type: ignore[no-any-return]
         hashed_reverse_lookup, name_class=REVERSE_LOOKUP_CLASS, name_parent=parent
     )

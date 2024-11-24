@@ -22,7 +22,8 @@ from record import (
     get_url_record,
     get_records,
     get_record_key,
-    deserialize_record, serialize_record,
+    deserialize_record,
+    serialize_record,
 )
 from resolve import resolve_sol_record_v1
 from transactions import create_versioned_transaction

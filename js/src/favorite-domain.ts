@@ -180,7 +180,6 @@ export const getMultipleFavoriteDomains = async (
     connection.getMultipleAccountsInfo(atas),
     connection.getMultipleAccountsInfo(parentRevKeys),
   ]);
-
   for (let i = 0; i < wallets.length; i++) {
     let parentRev = "";
     const domainInfo = domainInfos[i];
@@ -199,7 +198,6 @@ export const getMultipleFavoriteDomains = async (
     }
 
     const nativeOwner = new PublicKey(domainInfo?.data.slice(32, 64));
-
     if (nativeOwner.equals(wallets[i])) {
       result.push(deserializeReverse(rev?.data.slice(96), true) + parentRev);
       continue;

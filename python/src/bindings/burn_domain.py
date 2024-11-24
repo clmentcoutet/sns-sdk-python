@@ -9,9 +9,9 @@ from utils import get_domain_key, get_reverse_key
 
 
 def burn_domain(
-        domain: str,
-        owner: Pubkey,
-        target: Pubkey,
+    domain: str,
+    owner: Pubkey,
+    target: Pubkey,
 ) -> Instruction:
     pubkey = get_domain_key(domain)["pubkey"]
     state, _ = pubkey.find_program_address(
@@ -33,5 +33,5 @@ def burn_domain(
         state,
         REVERSE_LOOKUP_CLASS,
         owner,
-        target
+        target,
     )

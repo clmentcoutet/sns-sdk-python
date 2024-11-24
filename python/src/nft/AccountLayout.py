@@ -1,4 +1,4 @@
-from borsh_construct import CStruct, Bytes, U64, U8
+from borsh_construct import CStruct, U64, U8
 
 ACCOUNT_LAYOUT = CStruct(
     "mint" / U8[32],
@@ -10,5 +10,5 @@ ACCOUNT_LAYOUT = CStruct(
     "is_native_option" / U8,
     "is_native_raw" / U64,
     "delegated_amount_option" / U8,
-    "delegated_amount" / U64
+    "delegated_amount" / U64,
 )

@@ -1,4 +1,3 @@
-
 from borsh_construct import CStruct, U8
 from solders.instruction import AccountMeta, Instruction
 from solders.pubkey import Pubkey
@@ -16,17 +15,17 @@ class BurnInstruction:
 
     @classmethod
     def get_instruction(
-            cls,
-    program_id: Pubkey,
-    name_service_id: Pubkey,
-    system_program: Pubkey,
-    domain: Pubkey,
-    reverse: Pubkey,
-    reselling_state: Pubkey,
-    state: Pubkey,
-    central_state: Pubkey,
-    owner: Pubkey,
-    target: Pubkey
+        cls,
+        program_id: Pubkey,
+        name_service_id: Pubkey,
+        system_program: Pubkey,
+        domain: Pubkey,
+        reverse: Pubkey,
+        reselling_state: Pubkey,
+        state: Pubkey,
+        central_state: Pubkey,
+        owner: Pubkey,
+        target: Pubkey,
     ) -> Instruction:
         data = cls.serialize()
 
@@ -75,7 +74,7 @@ class BurnInstruction:
                 pubkey=target,
                 is_signer=False,
                 is_writable=True,
-            )
+            ),
         ]
 
         return Instruction(
@@ -83,4 +82,3 @@ class BurnInstruction:
             accounts=accounts,
             data=data,
         )
-

@@ -1,16 +1,14 @@
 from solana.rpc.async_api import AsyncClient
-from solana.rpc.types import RPCError
 from solders.pubkey import Pubkey
 from solders.rpc.errors import InvalidParamsMessage
 
 from exception import SolanaJSONRPCException
 from nft.AccountLayout import ACCOUNT_LAYOUT
-from nft.gert_domain_mint import get_domain_mint
+from nft.get_domain_mint import get_domain_mint
 
 
 async def retrieve_nft_owner(
-        connection: AsyncClient,
-        name_account: Pubkey
+    connection: AsyncClient, name_account: Pubkey
 ) -> Pubkey | None:
     """
     Retrieve the owner of an NFT.
@@ -23,8 +21,8 @@ async def retrieve_nft_owner(
         print(f"mint: {mint}, name_account: {name_account}")
 
         largest_accounts = await connection.get_token_largest_accounts(mint)
-        if isinstance(largest_accounts, InvalidParamsMessage):
-            return None
+        if isinstance(largest_accounts, InvalidParamsMessage): # type: ignore[unreachable]
+            return None # type: ignore[unreachable]
         if not largest_accounts or len(largest_accounts.value) == 0:
             return None
 
@@ -45,4 +43,3 @@ async def retrieve_nft_owner(
         raise err
     except Exception as err:
         raise err
-

@@ -224,6 +224,19 @@ files = [
 test = ["pytest (>=6)"]
 
 [[package]]
+name = "grapheme"
+version = "0.6.0"
+description = "Unicode grapheme helpers"
+optional = false
+python-versions = "*"
+files = [
+    {file = "grapheme-0.6.0.tar.gz", hash = "sha256:44c2b9f21bbe77cfb05835fec230bd435954275267fea1858013b102f8603cca"},
+]
+
+[package.extras]
+test = ["pytest", "sphinx", "sphinx-autobuild", "twine", "wheel"]
+
+[[package]]
 name = "h11"
 version = "0.14.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -693,4 +706,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "130a4c9a2d31f050c5ed323e30d12eef59c957007fca637d1df9b85b01c001ec"
+content-hash = "970f399e15067855928267c0e5f16777096afb66d91565d307f529be384f673d"

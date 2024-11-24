@@ -20,4 +20,6 @@ function const [favKey] = FavouriteDomain.getKeySync(
 Inconsistent naming of the file favorite-domain.ts and the class FavouriteDomain
 favorite !== favourite
 
-In favorite.test.ts, the second test failed
+In favorite.test.ts, the test with reverse: "1.00728" failed in Favorite domain and Multiple favorite domain
+
+Signature of closure from nft/retrieveRecords.ts is weird, should pass Publikey instead of Account

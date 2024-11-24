@@ -16,10 +16,6 @@ CENTRAL_STATE_SNS_RECORDS = Pubkey.from_string(
 )
 
 
-REGISTER_PROGRAM_ID = Pubkey.from_string(
-    "jCebN34bUfdeUYJT13J1yG16XWQpt5PDx6Mse9GUqhR"
-)
+REGISTER_PROGRAM_ID = Pubkey.from_string("jCebN34bUfdeUYJT13J1yG16XWQpt5PDx6Mse9GUqhR")
 
-NAME_OFFERS_ID = Pubkey.from_string(
-    "85iDfUvr3HJyLM2zcq5BXSiDvUWfw6cSE1FfNBo8Ap29"
-)
+NAME_OFFERS_ID = Pubkey.from_string("85iDfUvr3HJyLM2zcq5BXSiDvUWfw6cSE1FfNBo8Ap29")
