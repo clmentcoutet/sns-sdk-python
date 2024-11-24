@@ -9,10 +9,10 @@ from exception import NftRecordNotFoundException
 
 
 class Tag(Enum):
-    Uninitialized = 0,
-    CentralState = 1,
-    ActiveRecord = 2,
-    InactiveRecord = 3,
+    Uninitialized = (0,)
+    CentralState = (1,)
+    ActiveRecord = (2,)
+    InactiveRecord = (3,)
 
 
 class NftRecord:
@@ -26,11 +26,7 @@ class NftRecord:
     )
 
     def __init__(
-            self,
-            tag: Tag,
-            nonce: int,
-            name_account: bytes,
-            owner: bytes, nft_mint: bytes
+        self, tag: Tag, nonce: int, name_account: bytes, owner: bytes, nft_mint: bytes
     ):
         self.tag = tag
         self.nonce = nonce
@@ -43,25 +39,16 @@ class NftRecord:
         return cls.SCHEMA.deserialize(data)
 
     @classmethod
-    async def retrieve(
-            cls,
-            connection: AsyncClient,
-            key: Pubkey
-    ) -> "NftRecord":
+    async def retrieve(cls, connection: AsyncClient, key: Pubkey) -> "NftRecord":
         account_info = await connection.get_account_info(key)
         if not account_info or not account_info.value:
-            raise NftRecordNotFoundException(
-                f"NFT record not found: {str(key)}"
-            )
+            raise NftRecordNotFoundException(f"NFT record not found: {str(key)}")
         return cls.deserialize(account_info.value.data)
 
     @classmethod
     async def find_key(
-            cls,
-            name_account: Pubkey,
-            program_id: Pubkey
+        cls, name_account: Pubkey, program_id: Pubkey
     ) -> Tuple[Pubkey, int]:
         return Pubkey.find_program_address(
-            ["nft_record".encode(), bytes(name_account)],
-            program_id
+            ["nft_record".encode(), bytes(name_account)], program_id
         )

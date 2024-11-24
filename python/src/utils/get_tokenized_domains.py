@@ -13,15 +13,11 @@ class GetTokenizedDomainResp(TypedDict):
     reverse: str
 
 
-async def get_tokenized_domains(
-        connection: AsyncClient,
-        owner: Pubkey
-):
+async def get_tokenized_domains(connection: AsyncClient, owner: Pubkey):
     nft_records = await retrieve_records(connection, owner)
 
     names = await reverse_lookup_batch(
-        connection,
-        [record.name_account for record in nft_records]
+        connection, [record.name_account for record in nft_records]
     )
 
     return [

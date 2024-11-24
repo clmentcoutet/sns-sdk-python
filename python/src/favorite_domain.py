@@ -55,7 +55,9 @@ async def get_favorite_domain(
 ) -> GetFavoriteDomainResp:
     favorite_key, _ = FavoriteDomain.get_key(NAME_OFFERS_ID, owner)
     favorite = await FavoriteDomain.retrieve(connection, favorite_key)
-    registry = await NameRegistryState.retrieve(connection, Pubkey(favorite.name_account))
+    registry = await NameRegistryState.retrieve(
+        connection, Pubkey(favorite.name_account)
+    )
     nft_owner = await retrieve_nft_owner(connection, Pubkey(favorite.name_account))
 
     domain_owner = nft_owner if nft_owner else registry.owner
@@ -101,7 +103,9 @@ async def get_multiple_favorite_domains(
             if elem and elem.data and len(elem.data) >= 32
             else Pubkey.default()
         )
-        is_sub = elem and elem.owner == NAME_PROGRAM_ID and not parent == ROOT_DOMAIN_ACCOUNT
+        is_sub = (
+            elem and elem.owner == NAME_PROGRAM_ID and not parent == ROOT_DOMAIN_ACCOUNT
+        )
         parents_reverse_keys.append(
             get_reverse_key_from_domain_key(parent) if is_sub else Pubkey.default()
         )

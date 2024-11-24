@@ -13,7 +13,7 @@ async def test_price_and_product_keys(connection_url):
     # Mock connection and program key
     pyth_connection = PythClient(
         solana_client=SolanaClient(endpoint=connection_url),
-        first_mapping_account_key=get_key("mainnet", "mapping")
+        first_mapping_account_key=get_key("mainnet", "mapping"),
     )
 
     data = await pyth_connection.get_products()

@@ -2,7 +2,7 @@ import grapheme
 
 
 def get_domain_price_from_name(
-        name: str,
+    name: str,
 ) -> int:
     split = list(grapheme.graphemes(name))
 

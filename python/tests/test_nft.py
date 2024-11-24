@@ -22,6 +22,8 @@ items = [
         ],
     },
 ]
+
+
 @pytest.mark.asyncio
 async def test_get_tokenized_domains(connection_url):
     connection = AsyncClient(connection_url)
@@ -34,7 +36,7 @@ async def test_get_tokenized_domains(connection_url):
         {
             "key": domain["key"].to_base58(),
             "mint": domain["mint"].to_base58(),
-            "reverse": domain["reverse"]
+            "reverse": domain["reverse"],
         }
         for domain in domains
     ]
@@ -48,10 +50,13 @@ async def test_get_tokenized_domains(connection_url):
 
 
 # Parameterized test cases
-@pytest.mark.parametrize("domain, expected_address", [
-    ("domain1.sol", "3YTxXhhVue9BVjgjPwJbbJ4uGPsnwN453DDf72rYE5WN"),
-    ("sub.domain2.sol", "66CnogoXDBqYeYRGYzQf19VyrMnB4uGxpZQDuDYfbKCX"),
-])
+@pytest.mark.parametrize(
+    "domain, expected_address",
+    [
+        ("domain1.sol", "3YTxXhhVue9BVjgjPwJbbJ4uGPsnwN453DDf72rYE5WN"),
+        ("sub.domain2.sol", "66CnogoXDBqYeYRGYzQf19VyrMnB4uGxpZQDuDYfbKCX"),
+    ],
+)
 def test_get_domain_mint(domain, expected_address):
     pubkey = get_domain_key(domain)["pubkey"]
     result = str(get_domain_mint(pubkey))

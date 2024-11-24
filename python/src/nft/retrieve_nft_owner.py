@@ -21,8 +21,8 @@ async def retrieve_nft_owner(
         print(f"mint: {mint}, name_account: {name_account}")
 
         largest_accounts = await connection.get_token_largest_accounts(mint)
-        if isinstance(largest_accounts, InvalidParamsMessage): # type: ignore[unreachable]
-            return None # type: ignore[unreachable]
+        if isinstance(largest_accounts, InvalidParamsMessage):  # type: ignore[unreachable]
+            return None  # type: ignore[unreachable]
         if not largest_accounts or len(largest_accounts.value) == 0:
             return None
 

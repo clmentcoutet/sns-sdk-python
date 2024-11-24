@@ -2,8 +2,7 @@ import asyncio
 from typing import List
 
 from solana.rpc.async_api import AsyncClient
-from solana.rpc.types import MemcmpOpts, DataSliceOpts
-from solders.account import Account
+from solana.rpc.types import MemcmpOpts
 from solders.pubkey import Pubkey
 from spl.token.constants import TOKEN_PROGRAM_ID
 
@@ -13,15 +12,12 @@ from nft.state import NftRecord
 
 
 def _get_filter(owner: str) -> List[MemcmpOpts]:
-    return [
-        MemcmpOpts(offset=8, bytes=owner),
-        MemcmpOpts(offset=8, bytes="2")
-    ]
+    return [MemcmpOpts(offset=8, bytes=owner), MemcmpOpts(offset=8, bytes="2")]
 
 
 async def _closure(
-        connection: AsyncClient,
-        mint: Pubkey,
+    connection: AsyncClient,
+    mint: Pubkey,
 ) -> NftRecord | None:
     record = await get_record_from_mint(connection, mint)
     if record and len(record.value) == 0:
@@ -29,17 +25,12 @@ async def _closure(
 
 
 async def retrieve_records(
-        connection: AsyncClient,
-        owner: Pubkey,
+    connection: AsyncClient,
+    owner: Pubkey,
 ):
-    filters: List[MemcmpOpts | int] = [
-        *_get_filter(str(owner)),
-        165
-    ]
+    filters: List[MemcmpOpts | int] = [*_get_filter(str(owner)), 165]
 
-    res = await connection.get_program_accounts(
-        TOKEN_PROGRAM_ID, filters=filters
-    )
+    res = await connection.get_program_accounts(TOKEN_PROGRAM_ID, filters=filters)
 
     token_accounts = [ACCOUNT_LAYOUT.decode(e.account.data) for e in res.value]
 
