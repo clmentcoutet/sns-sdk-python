@@ -49,6 +49,8 @@ export class createSplitV2Instruction {
     referrerAccountOpt?: PublicKey,
   ): TransactionInstruction {
     const data = Buffer.from(this.serialize());
+    console.log(data.toString("hex"));
+
     let keys: AccountKey[] = [];
     keys.push({
       pubkey: namingServiceProgram,

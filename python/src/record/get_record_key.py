@@ -6,7 +6,7 @@ from custom_types.record import Record, RecordVersion
 from utils.get_domain_key import get_domain_key
 
 
-async def get_record_key(
+def get_record_key(
     domain: str,
     record: Record,
     record_version: Optional[RecordVersion] = RecordVersion.V1,

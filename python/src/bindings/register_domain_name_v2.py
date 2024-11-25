@@ -52,8 +52,8 @@ async def register_domain_name_v2(
 
     if ref_index != -1 and referrer_key:
         ref_token_account = get_associated_token_address(
-            mint,
             referrer_key,
+            mint
         )
         account = await connection.get_account_info(ref_token_account)
         if account.value is None or account.value.data is None:
@@ -65,8 +65,8 @@ async def register_domain_name_v2(
             ixs.append(ix)
 
     vault = get_associated_token_address(
-        mint,
-        VAULT_OWNER
+        VAULT_OWNER,
+        mint
     )
     pyth_feed = PYTH_PULL_FEEDS.get(str(mint))
 

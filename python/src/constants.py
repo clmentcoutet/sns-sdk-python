@@ -19,6 +19,9 @@ CENTRAL_STATE_SNS_RECORDS = Pubkey.from_string(
     "2pMnqHvei2N5oDcVGCRdZx48gqti199wr5CsyTTafsbo"
 )
 
+# TODO - this is define in solana/web3.js, should be in solana-py ?
+SIGNATURE_LENGTH_IN_BYTES = 64
+
 REGISTER_PROGRAM_ID = Pubkey.from_string("jCebN34bUfdeUYJT13J1yG16XWQpt5PDx6Mse9GUqhR")
 
 NAME_OFFERS_ID = Pubkey.from_string("85iDfUvr3HJyLM2zcq5BXSiDvUWfw6cSE1FfNBo8Ap29")

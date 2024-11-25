@@ -9,10 +9,10 @@ from exception import NftRecordNotFoundException
 
 
 class Tag(Enum):
-    Uninitialized = (0,)
-    CentralState = (1,)
-    ActiveRecord = (2,)
-    InactiveRecord = (3,)
+    Uninitialized = 0,
+    Central_state = 1,
+    active_record = 2,
+    inactive_record = 3,
 
 
 class NftRecord:

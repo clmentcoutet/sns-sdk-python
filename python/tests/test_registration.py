@@ -56,15 +56,14 @@ async def test_indempotent_ata_creation_ref(connection_url):
     connection = AsyncClient(connection_url)
     owner = Pubkey.from_string("5D2zKog251d6KPCyFyLMt3KroWwXXPWSgTPyhV22K2gR")
     pyth_mint = Pubkey.from_string("HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3")
-    domain = os.urandom(10).hex()
     ixs = []
     for i in range(3):
         ix = await register_domain_name_v2(
             connection,
-            domain,
+            os.urandom(10).hex(),
             1_000,
             owner,
-            get_associated_token_address(pyth_mint, owner),
+            get_associated_token_address(owner, pyth_mint),
             pyth_mint,
             REFERRERS[0],
         )
@@ -73,4 +72,44 @@ async def test_indempotent_ata_creation_ref(connection_url):
     tx = create_versioned_transaction(ixs, owner, blockhash, signers=[NullSigner(owner)])
     res = await connection.simulate_transaction(tx)
     print(res)
+    assert res.value.err is None
+
+
+@pytest.mark.asyncio
+async def test_register_v2(connection_url):
+    connection = AsyncClient(connection_url)
+    owner = Pubkey.from_string("5D2zKog251d6KPCyFyLMt3KroWwXXPWSgTPyhV22K2gR")
+    fida_mint = Pubkey.from_string("EchesyfXePKdLtoiZSL8pBe8Myagyy8ZRqsACNCFGnvp")
+    ix = await register_domain_name_v2(
+        connection,
+        os.urandom(10).hex(),
+        1_000,
+        owner,
+        get_associated_token_address(owner, fida_mint),
+        fida_mint,
+        REFERRERS[0],
+    )
+    blockhash = (await connection.get_latest_blockhash()).value.blockhash
+    tx = create_versioned_transaction(ix, owner, blockhash, signers=[NullSigner(owner)])
+    res = await connection.simulate_transaction(tx)
+    assert res.value.err is None
+
+
+@pytest.mark.asyncio
+async def test_register_v2_with_referrer(connection_url):
+    connection = AsyncClient(connection_url)
+    owner = Pubkey.from_string("5D2zKog251d6KPCyFyLMt3KroWwXXPWSgTPyhV22K2gR")
+    fida_mint = Pubkey.from_string("EchesyfXePKdLtoiZSL8pBe8Myagyy8ZRqsACNCFGnvp")
+    ix = await register_domain_name_v2(
+        connection,
+        os.urandom(10).hex(),
+        1_000,
+        owner,
+        get_associated_token_address(owner, fida_mint),
+        fida_mint,
+        REFERRERS[1],
+    )
+    blockhash = (await connection.get_latest_blockhash()).value.blockhash
+    tx = create_versioned_transaction(ix, owner, blockhash, signers=[NullSigner(owner)])
+    res = await connection.simulate_transaction(tx)
     assert res.value.err is None

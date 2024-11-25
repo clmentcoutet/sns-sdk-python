@@ -24,7 +24,7 @@ globals_1.jest.setTimeout(20000);
 globals_1.jest.retryTimes(3);
 const FIDA_MINT = new web3_js_1.PublicKey("EchesyfXePKdLtoiZSL8pBe8Myagyy8ZRqsACNCFGnvp");
 const PYTH_MINT = new web3_js_1.PublicKey("HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3");
-const connection = new web3_js_1.Connection(process.env.RPC_URL);
+const connection = new web3_js_1.Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 const VAULT_OWNER = new web3_js_1.PublicKey("5D2zKog251d6KPCyFyLMt3KroWwXXPWSgTPyhV22K2gR");
 (0, globals_1.test)("Register with NFT", () => __awaiter(void 0, void 0, void 0, function* () {
     const tx = new web3_js_1.Transaction();

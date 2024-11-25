@@ -16,6 +16,7 @@ class createSplitV2Instruction {
     }
     getInstruction(programId, namingServiceProgram, rootDomain, name, reverseLookup, systemProgram, centralState, buyer, domainOwner, feePayer, buyerTokenSource, pythFeedAccount, vault, splTokenProgram, rentSysvar, state, referrerAccountOpt) {
         const data = buffer_1.Buffer.from(this.serialize());
+        console.log(data.toString("hex"));
         let keys = [];
         keys.push({
             pubkey: namingServiceProgram,

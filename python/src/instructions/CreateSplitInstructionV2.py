@@ -1,6 +1,6 @@
 from typing import Optional
 
-from borsh_construct import CStruct, U8, U32, String, Option
+from borsh_construct import CStruct, U8, U32, U16, String, Option
 from solders.instruction import AccountMeta, Instruction
 from solders.pubkey import Pubkey
 
@@ -14,7 +14,7 @@ class CreateSplitInstructionV2:
         "tag" / U8,
         "name" / String,
         "space" / U32,
-        "referrer_index_opt" / Option(U8),
+        "referrer_index_opt" / Option(U16),
     )
 
     def __init__(self, name: str, space: int, referrer_index: int | None = None):
@@ -22,22 +22,20 @@ class CreateSplitInstructionV2:
         self.SPACE = space
         self.REFERRER_INDEX = referrer_index
 
-    @classmethod
-    def serialize(cls) -> bytes:
-        if cls.NAME or cls.SPACE:
+    def serialize(self) -> bytes:
+        if not self.NAME or not self.SPACE:
             raise ValueError("Name and space must be set")
-        return cls.SCHEMA.build(
+        return self.SCHEMA.build(
             {
-                "tag": cls.TAG,
-                "name": cls.NAME,
-                "space": cls.SPACE,
-                "referrer_index_opt": cls.REFERRER_INDEX,
+                "tag": self.TAG,
+                "name": self.NAME,
+                "space": self.SPACE,
+                "referrer_index_opt": self.REFERRER_INDEX,
             }
         )
 
-    @classmethod
     def get_instruction(
-            cls,
+            self,
             program_id: Pubkey,
             naming_service_program: Pubkey,
             root_domain: Pubkey,
@@ -56,7 +54,8 @@ class CreateSplitInstructionV2:
             state: Pubkey,
             referrer_account_opt: Optional[Pubkey],
     ) -> Instruction:
-        data = cls.serialize()
+        data = self.serialize()
+        print(data)
 
         accounts = [
             AccountMeta(
@@ -144,7 +143,7 @@ class CreateSplitInstructionV2:
                     is_writable=True,
                 )
             )
-
+        #print(f"program_id: {program_id}, accounts: {accounts}, data: {data}")
         return Instruction(
             program_id=program_id,
             accounts=accounts,

@@ -30,6 +30,13 @@ class NameRegistryState:
         return f"NameRegistryState(parent_name={self.parent_name}, owner={self.owner}, class_name={self.class_name})"
 
     @classmethod
+    def deserialize(cls, data: bytes) -> "NameRegistryState":
+        parsed = cls.SCHEMA.parse(data)
+        res = NameRegistryState(parsed.parent_name, parsed.owner, parsed.class_name)
+        res.data = data[cls.HEADER_LEN:]
+        return res
+
+    @classmethod
     def _parse_account_info(
         cls, name_account: Account | None
     ) -> Union["NameRegistryState", None]:

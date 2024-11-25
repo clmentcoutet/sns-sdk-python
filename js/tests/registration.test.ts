@@ -15,7 +15,7 @@ jest.retryTimes(3);
 const FIDA_MINT = new PublicKey("EchesyfXePKdLtoiZSL8pBe8Myagyy8ZRqsACNCFGnvp");
 const PYTH_MINT = new PublicKey("HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3");
 
-const connection = new Connection(process.env.RPC_URL!);
+const connection = new Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 
 const VAULT_OWNER = new PublicKey(
   "5D2zKog251d6KPCyFyLMt3KroWwXXPWSgTPyhV22K2gR",
