@@ -1,3 +1,5 @@
+from typing import List
+
 from solders.pubkey import Pubkey
 
 HASH_PREFIX = "SPL Name Service"
@@ -7,6 +9,8 @@ NAME_PROGRAM_ID = Pubkey.from_string("namesLPneVptA9Z5rqUDD9tMTWEJwofgaYwp8cawRk
 REVERSE_LOOKUP_CLASS = Pubkey.from_string(
     "33m47vH6Eav6jr5Ry86XjhRft2jRBLDnDgPSHoquXi2Z"
 )
+
+CENTRAL_STATE = REVERSE_LOOKUP_CLASS
 
 ROOT_DOMAIN_ACCOUNT = Pubkey.from_string("58PwtjSDuFHuUkYjH9BYnnQKHfwo9reZhC2zMJv9JPkx")
 
@@ -18,6 +22,8 @@ CENTRAL_STATE_SNS_RECORDS = Pubkey.from_string(
 REGISTER_PROGRAM_ID = Pubkey.from_string("jCebN34bUfdeUYJT13J1yG16XWQpt5PDx6Mse9GUqhR")
 
 NAME_OFFERS_ID = Pubkey.from_string("85iDfUvr3HJyLM2zcq5BXSiDvUWfw6cSE1FfNBo8Ap29")
+
+VAULT_OWNER = Pubkey.from_string("5D2zKog251d6KPCyFyLMt3KroWwXXPWSgTPyhV22K2gR")
 
 TOKENS_SYM_MINT = [
     ["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", "USDC"],
@@ -74,6 +80,27 @@ PYTH_FEEDS = {
         "product": "5Q5kyCVzssrGMd2BniSdVeRwjNWrGGrFhMrgGt4zURyA",
     },
 }
+
+REFERRERS: List[Pubkey] = [
+  Pubkey.from_string("3ogYncmMM5CmytsGCqKHydmXmKUZ6sGWvizkzqwT7zb1"), # Test wallet,
+  Pubkey.from_string("DM1jJCkZZEwY5tmWbgvKRxsDFzXCdbfrYCCH1CtwguEs"), # 4Everland
+  Pubkey.from_string("ADCp4QXFajHrhy4f43pD6GJFtQLkdBY2mjS9DfCk7tNW"), # Bandit network
+  Pubkey.from_string("2XTgjw8yi1E3Etgj4CUyRD7Zk49gynH2U9gA5N2MY4NP"), # Altoscan
+  Pubkey.from_string("5PwNeqQPiygQks9R17jUAodZQNuhvCqqkrxSaeNE8qTR"), # Solscan
+  Pubkey.from_string("8kJqxAbqbPLGLMgB6FhLcnw2SiUEavx2aEGM3WQGhtJF"), # Domain Labs
+  Pubkey.from_string("HemvJzwxvVpWBjPETpaseAH395WAxb2G73MeUfjVkK1u"), # Solflare
+  Pubkey.from_string("7hMiiUtkH4StMPJxyAtvzXTUjecTniQ8czkCPusf5eSW"), # Solnames
+  Pubkey.from_string("DGpjHo4yYA3NgHvhHTp3XfBFrESsx1DnhfTr8D881ZBM"), # Brave
+  Pubkey.from_string("7vWSqSw1eCXZXXUubuHWssXELNQ8MLaDgAs2ErEfCKxn"), # 585.eth
+  Pubkey.from_string("5F6gcdzpw7wUjNEugdsD4aLJdEQ4Wt8d6E85vaQXZQSJ"), # wdotsol
+  Pubkey.from_string("XEy9o73JBN2pEuN7aspe8mVLaWbL4ozjJs1tNRxx8bL"), # GoDID
+  Pubkey.from_string("D5cLoAGjNTHKU1UGv2bYwbnyRoGTMe3sbpLtJW3fRq91"), # SuiNS
+  Pubkey.from_string("FePcCmrr7vgjeFXcXtJHqShSXydaTrga2wfHRt9RrYvP"), # Nansen
+]
+
+USDC_MINT = Pubkey.from_string(
+    "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+)
 
 PYTH_PULL_FEEDS = {
     "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": [
@@ -420,4 +447,17 @@ PYTH_PULL_FEEDS = {
 
 DEFAULT_PYTH_PUSH_PROGRAM = Pubkey.from_string(
     "pythWSnswVUd12oZpeFP8e9CVaEqJg25g1Vtc2biRsT"
+)
+
+WOLVES_COLLECTION_METADATA = Pubkey.from_string(
+    "72aLKvXeV4aansAQtxKymeXDevT5ed6sCuz9iN62ugPT"
+)
+
+METAPLEX_ID = Pubkey.from_string(
+    "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+)
+
+# TODO - check if this is the right address
+SYSVAR_RENT_PUBKEY = Pubkey.from_string(
+    "SysvarRent111111111111111111111111111111111"
 )

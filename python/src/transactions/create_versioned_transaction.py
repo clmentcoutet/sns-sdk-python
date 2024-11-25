@@ -5,6 +5,7 @@ from solders.instruction import Instruction
 from solders.keypair import Keypair
 from solders.message import Message
 from solders.null_signer import NullSigner
+from solders.presigner import Presigner
 from solders.pubkey import Pubkey
 from solders.transaction import VersionedTransaction
 
@@ -16,7 +17,7 @@ def create_versioned_transaction(
     instructions: List[Instruction],
     payer: Pubkey,
     blockhash: Hash,
-    signers: Optional[List[Keypair]] = None,
+    signers: Optional[List[Keypair | Presigner | NullSigner]] = None,
 ) -> VersionedTransaction:
     """
     Create a new transaction object. If you do not provide signers,
