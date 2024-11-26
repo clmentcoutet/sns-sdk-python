@@ -86,7 +86,6 @@ export const resolve = async (
     if (content.length !== 32) {
       throw new RecordMalformed(`Record is malformed`);
     }
-
     if (
       recordV2.header.rightOfAssociationValidation !== Validation.Solana ||
       recordV2.header.stalenessValidation !== Validation.Solana
@@ -101,7 +100,6 @@ export const resolve = async (
     if (roaId.equals(content)) {
       return new PublicKey(content);
     }
-
     throw new InvalidRoAError(
       `The RoA ID shoudl be ${new PublicKey(
         content,

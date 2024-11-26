@@ -65,8 +65,12 @@ const resolve = (connection_1, domain_1, ...args_1) => __awaiter(void 0, [connec
         if (content.length !== 32) {
             throw new error_1.RecordMalformed(`Record is malformed`);
         }
+        console.log(recordV2.header.rightOfAssociationValidation);
+        console.log(recordV2.header.stalenessValidation);
+        console.log(sns_records_1.Validation.Solana);
         if (recordV2.header.rightOfAssociationValidation !== sns_records_1.Validation.Solana ||
             recordV2.header.stalenessValidation !== sns_records_1.Validation.Solana) {
+            console.log("oui");
             throw new error_1.WrongValidation();
         }
         if (!stalenessId.equals(registry.owner.toBuffer())) {
@@ -75,6 +79,7 @@ const resolve = (connection_1, domain_1, ...args_1) => __awaiter(void 0, [connec
         if (roaId.equals(content)) {
             return new web3_js_1.PublicKey(content);
         }
+        console.log("non");
         throw new error_1.InvalidRoAError(`The RoA ID shoudl be ${new web3_js_1.PublicKey(content).toBase58()} but is ${new web3_js_1.PublicKey(roaId).toBase58()} `);
     }
     // Check SOL record V1

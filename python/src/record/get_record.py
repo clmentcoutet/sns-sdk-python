@@ -55,7 +55,7 @@ async def get_record(
     :param deserialize: Whether or not to deserialize the record.
     :return: The record value, or None if the record does not exist.
     """
-    pubkey = await get_record_key(domain, record)
+    pubkey = get_record_key(domain, record)
     registry = await NameRegistryState.retrieve(connection, pubkey)
 
     if registry is None or registry.data is None:

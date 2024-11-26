@@ -2,12 +2,12 @@ import os
 import sys
 from pathlib import Path
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv, dotenv_values
 import pytest
 from solders.pubkey import Pubkey
 
 
-load_dotenv("python/.env.dev")
+load_dotenv(f"{Path(__file__).parent.parent}/.env.dev")
 # Add src directory to Python path
 src_path = Path(__file__).parent.parent / "src"
 sys.path.append(str(src_path))
@@ -15,6 +15,7 @@ sys.path.append(str(src_path))
 
 @pytest.fixture(scope="session", autouse=True)
 def connection_url():
+    print(dotenv_values(f"{Path(__file__).parent.parent}/.env.dev"))
     private_key = os.getenv("PRIVATE_KEY")
     if not private_key:
         raise ValueError("PRIVATE_KEY is not set in the .env.dev file")

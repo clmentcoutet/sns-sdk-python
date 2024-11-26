@@ -251,5 +251,5 @@ async def test_serialize_deserialize():
     ],
 )
 async def test_get_record_key(domain, record, expected):
-    result = await get_record_key(domain, record)
+    result = get_record_key(domain, record)
     assert result == Pubkey.from_string(expected)

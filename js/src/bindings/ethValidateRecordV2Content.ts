@@ -30,7 +30,6 @@ export const ethValidateRecordV2Content = (
   if (!parent) {
     throw new InvalidParrentError("Parent could not be found");
   }
-
   const ix = validateEthSignature(
     payer,
     pubkey,

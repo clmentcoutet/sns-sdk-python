@@ -29,3 +29,8 @@ Typo: InvalidParrentError should be InvalidParentError
 Function updateRecordInstruction is not tested
 
 Inconsistent naming deleteRecordV2 should be deleteRecordInstructionV2 or deleteRecordV2Instruction
+
+The test resolve.sns-ip-5-wallet-12 does not raise the correct error WrongValidation instead of InvalidRoa
+but the test function look to not test any error
+
+Deprecated function used in createNameRegistry

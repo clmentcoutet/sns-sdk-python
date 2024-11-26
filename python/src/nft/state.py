@@ -9,10 +9,10 @@ from exception import NftRecordNotFoundException
 
 
 class Tag(Enum):
-    Uninitialized = 0,
-    Central_state = 1,
-    active_record = 2,
-    inactive_record = 3,
+    Uninitialized = 0
+    Central_state = 1
+    active_record = 2
+    inactive_record = 3
 
 
 class NftRecord:
@@ -36,7 +36,7 @@ class NftRecord:
 
     @classmethod
     def deserialize(cls, data: bytes) -> "NftRecord":
-        return cls.SCHEMA.deserialize(data)
+        return cls.SCHEMA.parse(data)
 
     @classmethod
     async def retrieve(cls, connection: AsyncClient, key: Pubkey) -> "NftRecord":

@@ -25,7 +25,7 @@ const updateRecordV2Instruction_1 = require("../src/bindings/updateRecordV2Instr
 const validateRecordV2Content_1 = require("../src/bindings/validateRecordV2Content");
 const writRoaRecordV2_1 = require("../src/bindings/writRoaRecordV2");
 jest.setTimeout(50000);
-const connection = new web3_js_1.Connection(process.env.RPC_URL);
+const connection = new web3_js_1.Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 (0, globals_1.test)("Records V2 des/ser", () => {
     const items = [
         { content: "this is a test", record: record_1.Record.TXT },

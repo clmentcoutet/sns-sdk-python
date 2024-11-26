@@ -14,7 +14,7 @@ async def get_records(
     records: List[Record],
     deserialize: Optional[bool | None] = False,
 ) -> List[str | NameRegistryState | None]:
-    pubkeys = [await get_record_key(domain, record) for record in records]
+    pubkeys = [get_record_key(domain, record) for record in records]
     registries = await NameRegistryState.retrieve_batch(connection, pubkeys)
 
     if deserialize:
@@ -22,7 +22,7 @@ async def get_records(
             None
             if not e
             else deserialize_record(
-                e, records[idx], await get_record_key(domain, records[idx])
+                e, records[idx], get_record_key(domain, records[idx])
             )
             for idx, e in enumerate(registries)
         ]

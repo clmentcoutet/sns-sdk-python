@@ -25,7 +25,6 @@ export async function getAllDomains(
       },
     },
   ];
-  console.log("filters:", filters);
   const accounts = await connection.getProgramAccounts(NAME_PROGRAM_ID, {
     filters,
     // Only the public keys matter, not the data

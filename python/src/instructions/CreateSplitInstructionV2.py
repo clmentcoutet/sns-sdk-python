@@ -35,27 +35,26 @@ class CreateSplitInstructionV2:
         )
 
     def get_instruction(
-            self,
-            program_id: Pubkey,
-            naming_service_program: Pubkey,
-            root_domain: Pubkey,
-            name: Pubkey,
-            reverse_lookup: Pubkey,
-            system_program: Pubkey,
-            central_state: Pubkey,
-            buyer: Pubkey,
-            domain_owner: Pubkey,
-            fee_payer: Pubkey,
-            buyer_token_source: Pubkey,
-            pyth_feed_account: Pubkey,
-            vault: Pubkey,
-            spl_token_program: Pubkey,
-            rent_sysvar: Pubkey,
-            state: Pubkey,
-            referrer_account_opt: Optional[Pubkey],
+        self,
+        program_id: Pubkey,
+        naming_service_program: Pubkey,
+        root_domain: Pubkey,
+        name: Pubkey,
+        reverse_lookup: Pubkey,
+        system_program: Pubkey,
+        central_state: Pubkey,
+        buyer: Pubkey,
+        domain_owner: Pubkey,
+        fee_payer: Pubkey,
+        buyer_token_source: Pubkey,
+        pyth_feed_account: Pubkey,
+        vault: Pubkey,
+        spl_token_program: Pubkey,
+        rent_sysvar: Pubkey,
+        state: Pubkey,
+        referrer_account_opt: Optional[Pubkey],
     ) -> Instruction:
         data = self.serialize()
-        print(data)
 
         accounts = [
             AccountMeta(
@@ -143,7 +142,6 @@ class CreateSplitInstructionV2:
                     is_writable=True,
                 )
             )
-        #print(f"program_id: {program_id}, accounts: {accounts}, data: {data}")
         return Instruction(
             program_id=program_id,
             accounts=accounts,

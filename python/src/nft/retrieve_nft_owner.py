@@ -18,7 +18,6 @@ async def retrieve_nft_owner(
     """
     try:
         mint = get_domain_mint(name_account)
-        print(f"mint: {mint}, name_account: {name_account}")
 
         largest_accounts = await connection.get_token_largest_accounts(mint)
         if isinstance(largest_accounts, InvalidParamsMessage):  # type: ignore[unreachable]

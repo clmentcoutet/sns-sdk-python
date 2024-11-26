@@ -16,7 +16,7 @@ import { writRoaRecordV2 } from "../src/bindings/writRoaRecordV2";
 
 jest.setTimeout(50_000);
 
-const connection = new Connection(process.env.RPC_URL!);
+const connection = new Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 
 test("Records V2 des/ser", () => {
   const items = [

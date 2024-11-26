@@ -3,22 +3,21 @@ from solders.pubkey import Pubkey
 
 from bindings.get_base_instruction_data import get_base_instruction_data_v2
 from constants import NAME_PROGRAM_ID
-from custom_types import RecordVersion, Record
-from exception import InvalidParentException
+from custom_types import Record
 from record_v2.serialize_record_content_v2 import serialize_record_content_v2
-from sns_records.bindings import edit_record, SNS_RECORDS_ID
-from utils import get_domain_key
+from sns_records.bindings import edit_record
+from sns_records.constants import SNS_RECORDS_ID
 
 
-async def update_record_instruction_v2(
+def update_record_instruction_v2(
     domain: str, record: Record, content: str, owner: Pubkey, payer: Pubkey
 ) -> Instruction:
-    pubkey, parent, is_sub = get_base_instruction_data_v2(domain, record)
+    res = get_base_instruction_data_v2(domain, record)
 
     return edit_record(
         payer,
-        pubkey,
-        parent,
+        res["pubkey"],
+        res["parent"],
         owner,
         NAME_PROGRAM_ID,
         f"\x02{record.value}",

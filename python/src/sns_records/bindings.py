@@ -1,11 +1,17 @@
+from solana.constants import SYSTEM_PROGRAM_ID
 from solders.instruction import Instruction
 from solders.pubkey import Pubkey
 
+from sns_records.constants import CENTRAL_STATE_SNS_RECORDS
+from sns_records.instructions.AllocateAndPostRecordInstruction import AllocateAndPostRecordInstruction
+from sns_records.instructions.AllocateRecordInstruction import AllocateRecordInstruction
+from sns_records.instructions.DeleteRecordInstruction import DeleteRecordInstruction
+from sns_records.instructions.EditRecordInstruction import EditRecordInstruction
+from sns_records.instructions.UnverifyRoaInstruction import UnverifyRoaInstruction
+from sns_records.instructions.ValidateEthereumSignatureInstruction import ValidateEthereumSignatureInstruction
+from sns_records.instructions.ValidateSolanaSignatureInstruction import ValidateSolanaSignatureInstruction
+from sns_records.instructions.WriteRoaInstruction import WriteRoaInstruction
 from sns_records.state import Validation
-
-SNS_RECORDS_ID: Pubkey = Pubkey.default()
-
-CENTRAL_STATE_SNS_RECORDS: Pubkey = Pubkey.default()
 
 
 def allocate_and_post_record(
@@ -18,7 +24,16 @@ def allocate_and_post_record(
     content: bytes,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return AllocateAndPostRecordInstruction(record, list(content)).get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        domain_owner,
+        CENTRAL_STATE_SNS_RECORDS
+    )
 
 
 def allocate_record(
@@ -31,7 +46,16 @@ def allocate_record(
     content_length: int,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return AllocateRecordInstruction(record, content_length).get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        domain_owner,
+        CENTRAL_STATE_SNS_RECORDS
+    )
 
 
 def delete_record(
@@ -42,7 +66,16 @@ def delete_record(
     name_program_id: Pubkey,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return DeleteRecordInstruction().get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        domain_owner,
+        CENTRAL_STATE_SNS_RECORDS
+    )
 
 
 def edit_record(
@@ -55,7 +88,16 @@ def edit_record(
     content: bytes,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return EditRecordInstruction(record, list(content)).get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        domain_owner,
+        CENTRAL_STATE_SNS_RECORDS
+    )
 
 
 def validate_eth_signature(
@@ -69,7 +111,18 @@ def validate_eth_signature(
     expected_pubkey: bytes,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return ValidateEthereumSignatureInstruction(
+        validation.value, signature, expected_pubkey
+    ).get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        domain_owner,
+        CENTRAL_STATE_SNS_RECORDS
+    )
 
 
 def validate_solana_signature(
@@ -82,7 +135,17 @@ def validate_solana_signature(
     staleness: bool,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return ValidateSolanaSignatureInstruction(staleness).get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        domain_owner,
+        CENTRAL_STATE_SNS_RECORDS,
+        verifier
+    )
 
 
 def write_roa(
@@ -94,7 +157,16 @@ def write_roa(
     roa_id: Pubkey,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return WriteRoaInstruction(list(bytes(roa_id))).get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        domain_owner,
+        CENTRAL_STATE_SNS_RECORDS
+    )
 
 
 def unverify_roa(
@@ -105,4 +177,13 @@ def unverify_roa(
     verifier: Pubkey,
     program_id: Pubkey,
 ) -> Instruction:
-    pass
+    return UnverifyRoaInstruction().get_instruction(
+        program_id,
+        SYSTEM_PROGRAM_ID,
+        name_program_id,
+        fee_payer,
+        record_key,
+        domain_key,
+        CENTRAL_STATE_SNS_RECORDS,
+        verifier
+    )

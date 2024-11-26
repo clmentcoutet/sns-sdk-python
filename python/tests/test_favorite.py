@@ -122,5 +122,4 @@ async def test_register_fav(connection_url):
     tx = create_versioned_transaction([ix], owner, blockhash)
 
     res = await connection.simulate_transaction(tx)
-    print(res)
     assert res.value.err is None

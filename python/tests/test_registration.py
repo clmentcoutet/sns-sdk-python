@@ -42,10 +42,7 @@ async def test_registration_with_nft(connection_url):
     blockhash = (await connection.get_latest_blockhash()).value.blockhash
 
     tx = create_versioned_transaction(
-        [ix],
-        owner,
-        blockhash,
-        signers=[NullSigner(owner), NullSigner(holder)]
+        [ix], owner, blockhash, signers=[NullSigner(owner), NullSigner(holder)]
     )
     res = await connection.simulate_transaction(tx)
     assert res.value.err is None
@@ -69,9 +66,10 @@ async def test_indempotent_ata_creation_ref(connection_url):
         )
         ixs.extend(ix)
     blockhash = (await connection.get_latest_blockhash()).value.blockhash
-    tx = create_versioned_transaction(ixs, owner, blockhash, signers=[NullSigner(owner)])
+    tx = create_versioned_transaction(
+        ixs, owner, blockhash, signers=[NullSigner(owner)]
+    )
     res = await connection.simulate_transaction(tx)
-    print(res)
     assert res.value.err is None
 
 

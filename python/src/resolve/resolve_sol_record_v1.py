@@ -13,7 +13,7 @@ async def resolve_sol_record_v1(
     owner: Pubkey,
     domain: str,
 ) -> Pubkey:
-    record_key = await get_record_key(domain, Record.SOL)
+    record_key = get_record_key(domain, Record.SOL)
     sol_record = await get_sol_record(connection, domain)
 
     if sol_record is None or sol_record.data is None:

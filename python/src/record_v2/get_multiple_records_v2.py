@@ -1,6 +1,7 @@
 from typing import TypedDict, Optional, List
 
 from solana.rpc.async_api import AsyncClient
+from typing_extensions import NotRequired
 
 from custom_types import Record
 from record_v2.deserialize_record_content_v2 import deserialize_record_content_v2
@@ -15,32 +16,30 @@ class GetRecordV2Options(TypedDict):
 class RecordResult(TypedDict):
     retrievedRecord: SnsRecord
     record: Record
-    deserializedContent: Optional[str]
+    deserialized_content: NotRequired[str]
 
 
 async def get_multiple_records_v2(
-        connection: AsyncClient,
-        domain: str,
-        records: List[Record],
-        options: GetRecordV2Options = None,
+    connection: AsyncClient,
+    domain: str,
+    records: List[Record],
+    options: GetRecordV2Options = None,
 ) -> List[RecordResult | None]:
-    pubkey = [
-        get_record_key_v2(domain, record)
-        for record in records
-    ]
-    retrieved_records = await SnsRecord.retrieve_batch(connection, pubkey)
+    pubkeys = [get_record_key_v2(domain, record) for record in records]
+    retrieved_records = await SnsRecord.retrieve_batch(connection, pubkeys)
 
-    if options.get('deserialize', False):
+    if options.get("deserialize", False):
         return [
             RecordResult(
                 retrievedRecord=e,
                 record=records[idx],
-                deserializedContent=deserialize_record_content_v2(
+                deserialized_content=deserialize_record_content_v2(
                     e.get_content(),
                     records[idx],
                 ),
             )
-            if e else None
+            if e
+            else None
             for idx, e in enumerate(retrieved_records)
         ]
 
@@ -49,6 +48,7 @@ async def get_multiple_records_v2(
             retrievedRecord=e,
             record=records[idx],
         )
-        if e else None
+        if e
+        else None
         for idx, e in enumerate(retrieved_records)
     ]

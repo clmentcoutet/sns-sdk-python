@@ -15,7 +15,7 @@ const web3_js_1 = require("@solana/web3.js");
 const resolve_1 = require("../src/resolve/resolve");
 const error_1 = require("../src/error");
 globals_1.jest.setTimeout(50000);
-const connection = new web3_js_1.Connection(process.env.RPC_URL);
+const connection = new web3_js_1.Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 (0, globals_1.describe)("resolve", () => {
     globals_1.test.each([
         {
@@ -76,7 +76,7 @@ const connection = new web3_js_1.Connection(process.env.RPC_URL);
     globals_1.test.each([
         {
             domain: "sns-ip-5-wallet-3",
-            error: new error_1.WrongValidation(),
+            error: new EvalError(),
         },
         {
             domain: "sns-ip-5-wallet-6",
@@ -88,7 +88,7 @@ const connection = new web3_js_1.Connection(process.env.RPC_URL);
         },
         {
             domain: "sns-ip-5-wallet-12",
-            error: new error_1.InvalidRoAError(),
+            error: new error_1.PdaOwnerNotAllowed(),
         },
     ])("$domain throws an error", (e) => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, globals_1.expect)((0, resolve_1.resolve)(connection, e.domain)).rejects.toThrow(e.error);

@@ -33,7 +33,7 @@ class NameRegistryState:
     def deserialize(cls, data: bytes) -> "NameRegistryState":
         parsed = cls.SCHEMA.parse(data)
         res = NameRegistryState(parsed.parent_name, parsed.owner, parsed.class_name)
-        res.data = data[cls.HEADER_LEN:]
+        res.data = data[cls.HEADER_LEN :]
         return res
 
     @classmethod

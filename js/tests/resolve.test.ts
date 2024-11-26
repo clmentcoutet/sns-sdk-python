@@ -4,13 +4,12 @@ import { Connection, SystemProgram } from "@solana/web3.js";
 import { AllowPda, resolve } from "../src/resolve/resolve";
 import {
   InvalidRoAError,
-  PdaOwnerNotAllowed,
-  WrongValidation,
+  PdaOwnerNotAllowed, WrongValidation,
 } from "../src/error";
 
 jest.setTimeout(50_000);
 
-const connection = new Connection(process.env.RPC_URL!);
+const connection = new Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 
 describe("resolve", () => {
   test.each([
