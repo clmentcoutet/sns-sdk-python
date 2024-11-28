@@ -35,9 +35,6 @@ def _check_sol_record_v2(sol_record_v2_info: Account, registry: NameRegistryStat
     staleness_id = record_v2.get_staleness_id()
     roa_id = record_v2.get_roa_id()
     content = record_v2.get_content()
-    print(record_v2.header.right_of_association_validation)
-    print(record_v2.header.staleness_validation)
-    print(Validation.Solana.value)
     if len(content) != 32:
         raise RecordMalformedException("Record is malformed")
 

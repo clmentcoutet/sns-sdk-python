@@ -5,7 +5,7 @@ from bindings.get_base_instruction_data import get_base_instruction_data_v2
 from constants import NAME_PROGRAM_ID
 from custom_types import Record
 from sns_records.bindings import delete_record
-from sns_records.constants import SNS_RECORDS_ID
+from bindings.constants import SNS_RECORDS_ID
 
 
 def delete_record_instruction_v2(

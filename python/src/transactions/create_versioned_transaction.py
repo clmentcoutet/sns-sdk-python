@@ -40,7 +40,12 @@ def create_versioned_transaction(
     num_required_signatures = message.header.num_required_signatures
     if signers is None:
         signers = [NullSigner(payer)] * num_required_signatures  # type: ignore[list-item]
-
+    else:
+        check(
+            all([signer.pubkey() in message.signer_keys() for signer in signers]),
+            UnsupportedSignatureException(
+                f"The provided signers do not match the required signers: {message.signer_keys()}")
+        )
     check(
         len(signers) == num_required_signatures,
         UnsupportedSignatureException(

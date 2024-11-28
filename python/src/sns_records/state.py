@@ -5,7 +5,7 @@ from borsh_construct import CStruct, U16, U32
 from solana.rpc.async_api import AsyncClient
 from solders.pubkey import Pubkey
 
-from sns_records.constants import NAME_REGISTRY_LEN
+from bindings.constants import NAME_REGISTRY_LEN
 
 
 class Validation(Enum):

@@ -6,7 +6,7 @@ from constants import NAME_PROGRAM_ID
 from custom_types import Record
 from record_v2.serialize_record_content_v2 import serialize_record_content_v2
 from sns_records.bindings import allocate_and_post_record
-from sns_records.constants import SNS_RECORDS_ID
+from bindings.constants import SNS_RECORDS_ID
 
 
 def create_record_instruction_v2(

@@ -25,7 +25,7 @@ class NumberuBase(ABC):
                 f"Value must be a {self.BYTES_LENGTH * 8}-bit unsigned integer"
             )
 
-    def to_buffer(self) -> bytes:
+    def to_bytes(self) -> bytes:
         """Convert to bytes representation"""
         return struct.pack(self.STRUCT_FORMAT, self.value)
 

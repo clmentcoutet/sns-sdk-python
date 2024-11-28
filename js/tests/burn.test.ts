@@ -5,7 +5,7 @@ import { burnDomain } from "../src/bindings/burnDomain";
 
 jest.setTimeout(20_000);
 
-const connection = new Connection(process.env.RPC_URL!);
+const connection = new Connection("https://magical-powerful-river.solana-mainnet.quiknode.pro/05acdc3d91f32f7df8072adb49ee7e4e893e8139");
 
 const OWNER = new PublicKey("3Wnd5Df69KitZfUoPYZU438eFRNwGHkhLnSAWL65PxJX");
 

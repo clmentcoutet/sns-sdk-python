@@ -1,7 +1,7 @@
 from solders.pubkey import Pubkey
 
 from custom_types import Record
-from sns_records.constants import CENTRAL_STATE_SNS_RECORDS
+from bindings.constants import CENTRAL_STATE_SNS_RECORDS
 from utils import get_domain_key, get_hashed_name, get_name_account_key
 
 

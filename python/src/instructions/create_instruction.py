@@ -21,10 +21,10 @@ def create_instruction(
 ) -> Instruction:
     buffers = [
         bytes([0]),
-        Numberu32(len(hashed_name)).to_buffer(),
+        Numberu32(len(hashed_name)).to_bytes(),
         hashed_name,
-        lamports.to_buffer(),
-        space.to_buffer(),
+        lamports.to_bytes(),
+        space.to_bytes(),
     ]
 
     data = b"".join(buffers)

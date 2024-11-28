@@ -11,7 +11,8 @@ from exception import FavouriteDomainNotFoundException
 from nft import retrieve_nft_owner
 from nft.AccountLayout import ACCOUNT_LAYOUT
 from nft.get_domain_mint import get_domain_mint
-from utils import reverse_lookup, get_reverse_key_from_domain_key, deserialize_reverse
+from utils import reverse_lookup, deserialize_reverse
+from utils.get_reverse_key_from_domain_key import get_reverse_key_from_domain_key
 
 
 class GetFavoriteDomainResp(TypedDict):

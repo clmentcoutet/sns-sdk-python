@@ -2,7 +2,7 @@ from solana.constants import SYSTEM_PROGRAM_ID
 from solders.instruction import Instruction
 from solders.pubkey import Pubkey
 
-from sns_records.constants import CENTRAL_STATE_SNS_RECORDS
+from bindings.constants import CENTRAL_STATE_SNS_RECORDS
 from sns_records.instructions.AllocateAndPostRecordInstruction import AllocateAndPostRecordInstruction
 from sns_records.instructions.AllocateRecordInstruction import AllocateRecordInstruction
 from sns_records.instructions.DeleteRecordInstruction import DeleteRecordInstruction

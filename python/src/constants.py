@@ -19,6 +19,14 @@ CENTRAL_STATE_SNS_RECORDS = Pubkey.from_string(
     "2pMnqHvei2N5oDcVGCRdZx48gqti199wr5CsyTTafsbo"
 )
 
+TWITTER_VERIFICATION_AUTHORITY = Pubkey.from_string(
+    "FvPH7PrVrLGKPfqaf3xJodFTjZriqrAXXLTVWEorTFBi"
+)
+
+TWITTER_ROOT_PARENT_REGISTRY_KEY = Pubkey.from_string(
+    "4YcexoW3r78zz16J2aqmukBLRwGq6rAvWzJpkYAXqebv"
+)
+
 # TODO - this is define in solana/web3.js, should be in solana-py ?
 SIGNATURE_LENGTH_IN_BYTES = 64
 
